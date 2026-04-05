@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Giri — Cybersecurity & Dev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f7f6f2;
+    --surface: #ffffff;
+    --text: #111110;
+    --muted: #7a7a72;
+    --accent: #1a3a2a;
+    --accent-light: #e8f0eb;
+    --border: #e2e0d8;
+    --tag-bg: #efefeb;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 5%;
+    background: rgba(247,246,242,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--muted); font-size: 0.875rem;
+    font-weight: 400; letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 0 5%;
+    padding-top: 5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-inner { max-width: 820px; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent);
+    background: var(--accent-light);
+    padding: 0.3rem 0.75rem; border-radius: 99px;
+    margin-bottom: 2rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 6px; height: 6px;
+    border-radius: 50%; background: var(--accent);
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: 1.1rem; color: var(--muted); max-width: 480px;
+    line-height: 1.75; margin-bottom: 2.5rem;
+  }
+  .hero-cta {
+    display: inline-flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.75rem 1.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem; font-weight: 500;
+    border-radius: 6px; text-decoration: none;
+    transition: all 0.2s; cursor: pointer; border: none;
+  }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+  }
+  .btn-primary:hover { background: #0f2418; }
+  .btn-ghost {
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { background: var(--surface); }
+
+  /* SECTION SHELLS */
+  section { padding: 6rem 5%; border-bottom: 1px solid var(--border); }
+
+  .section-header {
+    display: flex; align-items: baseline; gap: 1.5rem;
+    margin-bottom: 3.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 2px solid var(--text);
+  }
+  .section-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 0;
+  }
+  .section-header .section-num {
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted);
+    padding-bottom: 0.2rem;
+  }
+
+  /* legacy standalone h2 (hero about-text) */
+  .about-text h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+  }
+  .contact-inner h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 0;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    max-width: 1000px;
+  }
+  .about-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  }
+  .stat-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.5rem;
+  }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.25rem; color: var(--accent);
+    letter-spacing: -0.03em;
+  }
+  .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    max-width: 1100px;
+  }
+  .project-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 2rem;
+    display: flex; flex-direction: column; gap: 1rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .project-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.07); }
+  .project-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: var(--accent-light); display: flex; align-items: center;
+    justify-content: center; font-size: 1.3rem;
+  }
+  .project-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem; letter-spacing: -0.01em;
+  }
+  .project-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; }
+  .tag {
+    font-size: 0.72rem; font-weight: 500;
+    background: var(--tag-bg); color: var(--muted);
+    padding: 0.25rem 0.6rem; border-radius: 4px;
+    letter-spacing: 0.02em;
+  }
+  .project-link {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    font-size: 0.8rem; font-weight: 500; color: var(--accent);
+    text-decoration: none; margin-top: 0.5rem;
+  }
+  .project-link:hover { text-decoration: underline; }
+  .badge-featured {
+    position: absolute; top: 1rem; right: 1rem;
+    font-size: 0.65rem; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent);
+    background: var(--accent-light);
+    padding: 0.2rem 0.5rem; border-radius: 4px;
+  }
+
+  /* SKILLS */
+  .skills-wrapper { max-width: 900px; }
+  .skills-row {
+    display: flex; flex-wrap: wrap; gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+  .skill-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 99px; font-size: 0.85rem; font-weight: 400;
+    color: var(--text);
+  }
+  .skill-pill .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+  }
+  .dot-green { background: #4caf7d; }
+  .dot-blue  { background: #5e8ac8; }
+  .dot-orange{ background: #e07b39; }
+  .skills-cat {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  /* CONTACT */
+  .contact-inner {
+    display: flex; flex-direction: column; gap: 2rem;
+    max-width: 560px;
+  }
+  .contact-inner p { color: var(--muted); line-height: 1.8; }
+  .contact-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 5%;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.8rem; color: var(--muted);
+    flex-wrap: wrap; gap: 1rem;
+  }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 700px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Giri.</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Cybersecurity · Software · Builder</div>
+    <h1>Hi, I'm Giri.<br/><em>I break things</em><br/>to understand them.</h1>
+    <p class="hero-sub">
+      High school student passionate about cybersecurity, software development, and building tools that actually matter. Currently exploring offensive security, CTFs, and AI-powered applications.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View my work ↓</a>
+      <a href="#contact" class="btn btn-ghost">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header fade-up">
+    <span class="section-num">01</span>
+    <h2>About</h2>
+  </div>
+  <div class="about-grid fade-up">
+    <div class="about-text">
+      <h2>Student. Builder.<br/>Security enthusiast.</h2>
+      <p>I'm a sophomore with a deep interest in how systems work — and how they break. From competing in CyberPatriot to building full-stack tools, I'm always pushing to learn something new at the edge of what I know.</p>
+      <p>When I'm not writing code or doing CTF challenges, I'm running, connecting with professionals in the cybersecurity field, or planning my next project.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-num">Platinum</div>
+        <div class="stat-label">CyberPatriot rank</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">10th</div>
+        <div class="stat-label">Grade</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">Boston</div>
+        <div class="stat-label">Area, MA</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">MIT</div>
+        <div class="stat-label">Blueprint alum</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header fade-up">
+    <span class="section-num">02</span>
+    <h2>Projects</h2>
+  </div>
+  <div class="projects-grid">
+
+    <div class="project-card fade-up">
+      <div class="badge-featured">Featured</div>
+      <div class="project-icon">🏃</div>
+      <h3>RunnerTrack</h3>
+      <p>A real-time running form analysis app using computer vision. Detects posture, stride, and form issues using MediaPipe pose estimation, displayed in an interactive Streamlit dashboard.</p>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">MediaPipe</span>
+        <span class="tag">OpenCV</span>
+        <span class="tag">Streamlit</span>
+        <span class="tag">Ollama LLM</span>
+      </div>
+      <a href="#" class="project-link">View on GitHub →</a>
+    </div>
+
+    <div class="project-card fade-up">
+      <div class="project-icon">🛡️</div>
+      <h3>CTF Writeups</h3>
+      <p>Documented solutions and methodology notes from picoCTF and other competitions. Covers web exploitation, reverse engineering, cryptography, and binary challenges.</p>
+      <div class="project-tags">
+        <span class="tag">picoCTF</span>
+        <span class="tag">Web Exploit</span>
+        <span class="tag">Crypto</span>
+        <span class="tag">Rev Eng</span>
+      </div>
+      <a href="#" class="project-link">View writeups →</a>
+    </div>
+
+    <div class="project-card fade-up">
+      <div class="project-icon">🔧</div>
+      <h3>Tampermonkey Scripts</h3>
+      <p>Custom browser automation and enhancement scripts written in JavaScript. Demonstrates practical scripting, DOM manipulation, and browser extension development.</p>
+      <div class="project-tags">
+        <span class="tag">JavaScript</span>
+        <span class="tag">Tampermonkey</span>
+        <span class="tag">Browser APIs</span>
+      </div>
+      <a href="#" class="project-link">View on GitHub →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header fade-up">
+    <span class="section-num">03</span>
+    <h2>Skills & Tools</h2>
+  </div>
+  <div class="skills-wrapper fade-up">
+
+    <div class="skills-cat">Cybersecurity</div>
+    <div class="skills-row">
+      <span class="skill-pill"><span class="dot dot-green"></span>Network Defense</span>
+      <span class="skill-pill"><span class="dot dot-green"></span>CTF / Capture the Flag</span>
+      <span class="skill-pill"><span class="dot dot-green"></span>Linux Hardening</span>
+      <span class="skill-pill"><span class="dot dot-green"></span>CyberPatriot</span>
+      <span class="skill-pill"><span class="dot dot-green"></span>Bug Bounty (learning)</span>
+    </div>
+
+    <div class="skills-cat">Development</div>
+    <div class="skills-row">
+      <span class="skill-pill"><span class="dot dot-blue"></span>Python</span>
+      <span class="skill-pill"><span class="dot dot-blue"></span>JavaScript</span>
+      <span class="skill-pill"><span class="dot dot-blue"></span>OpenCV</span>
+      <span class="skill-pill"><span class="dot dot-blue"></span>Streamlit</span>
+      <span class="skill-pill"><span class="dot dot-blue"></span>Git / GitHub</span>
+      <span class="skill-pill"><span class="dot dot-blue"></span>MediaPipe</span>
+    </div>
+
+    <div class="skills-cat">Tools & Platforms</div>
+    <div class="skills-row">
+      <span class="skill-pill"><span class="dot dot-orange"></span>Kali Linux</span>
+      <span class="skill-pill"><span class="dot dot-orange"></span>VS Code</span>
+      <span class="skill-pill"><span class="dot dot-orange"></span>Ollama (Local LLMs)</span>
+      <span class="skill-pill"><span class="dot dot-orange"></span>Wireshark</span>
+      <span class="skill-pill"><span class="dot dot-orange"></span>Burp Suite (learning)</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header fade-up">
+    <span class="section-num">04</span>
+    <h2>Contact</h2>
+  </div>
+  <div class="contact-inner fade-up">
+    <h2>Let's connect.</h2>
+    <p>I'm always open to conversations with professionals in cybersecurity, research opportunities, or just talking about cool projects. Feel free to reach out.</p>
+    <div class="contact-links">
+      <a href="/cdn-cgi/l/email-protection#dda4b2a8af9db8b0bcb4b1f3beb2b0" class="btn btn-primary">Email me →</a>
+      <a href="https://github.com/" target="_blank" class="btn btn-ghost">GitHub</a>
+      <a href="https://linkedin.com/in/" target="_blank" class="btn btn-ghost">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Giri. All rights reserved.</span>
+  <span>Built from scratch · Boston, MA</span>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Fade-up on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+ 
