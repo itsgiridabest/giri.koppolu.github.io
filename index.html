@@ -84,17 +84,12 @@
     color: var(--text);
     margin-bottom: 1.5rem;
   }
-  .hero h1 em {
-    font-style: italic;
-    color: var(--accent);
-  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
   .hero-sub {
     font-size: 1.1rem; color: var(--muted); max-width: 480px;
     line-height: 1.75; margin-bottom: 2.5rem;
   }
-  .hero-cta {
-    display: inline-flex; gap: 1rem; flex-wrap: wrap;
-  }
+  .hero-cta { display: inline-flex; gap: 1rem; flex-wrap: wrap; }
   .btn {
     display: inline-flex; align-items: center; gap: 0.4rem;
     padding: 0.75rem 1.5rem;
@@ -103,17 +98,12 @@
     border-radius: 6px; text-decoration: none;
     transition: all 0.2s; cursor: pointer; border: none;
   }
-  .btn-primary {
-    background: var(--accent); color: #fff;
-  }
+  .btn-primary { background: var(--accent); color: #fff; }
   .btn-primary:hover { background: #0f2418; }
-  .btn-ghost {
-    background: transparent; color: var(--text);
-    border: 1px solid var(--border);
-  }
+  .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
   .btn-ghost:hover { background: var(--surface); }
 
-  /* SECTION SHELLS */
+  /* SECTIONS */
   section { padding: 6rem 5%; border-bottom: 1px solid var(--border); }
 
   .section-header {
@@ -127,50 +117,32 @@
     font-size: clamp(2.25rem, 5vw, 3.5rem);
     letter-spacing: -0.03em;
     line-height: 1;
-    margin-bottom: 0;
   }
-  .section-header .section-num {
+  .section-num {
     font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em;
     text-transform: uppercase; color: var(--muted);
-    padding-bottom: 0.2rem;
-  }
-
-  /* legacy standalone h2 (hero about-text) */
-  .about-text h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-    margin-bottom: 1.25rem;
-  }
-  .contact-inner h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-    margin-bottom: 0;
   }
 
   /* ABOUT */
   .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-    max-width: 1000px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: start; max-width: 1000px;
+  }
+  .about-text h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    letter-spacing: -0.02em; line-height: 1.2;
+    margin-bottom: 1.25rem;
   }
   .about-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
-  .about-stats {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
-  }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
   .stat-card {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: 10px; padding: 1.5rem;
   }
   .stat-num {
     font-family: 'DM Serif Display', serif;
-    font-size: 2.25rem; color: var(--accent);
-    letter-spacing: -0.03em;
+    font-size: 2.25rem; color: var(--accent); letter-spacing: -0.03em;
   }
   .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; }
 
@@ -178,8 +150,7 @@
   .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.5rem;
-    max-width: 1100px;
+    gap: 1.5rem; max-width: 1100px;
   }
   .project-card {
     background: var(--surface); border: 1px solid var(--border);
@@ -191,8 +162,8 @@
   .project-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.07); }
   .project-icon {
     width: 44px; height: 44px; border-radius: 10px;
-    background: var(--accent-light); display: flex; align-items: center;
-    justify-content: center; font-size: 1.3rem;
+    background: var(--accent-light); display: flex;
+    align-items: center; justify-content: center; font-size: 1.3rem;
   }
   .project-card h3 {
     font-family: 'DM Serif Display', serif;
@@ -203,8 +174,7 @@
   .tag {
     font-size: 0.72rem; font-weight: 500;
     background: var(--tag-bg); color: var(--muted);
-    padding: 0.25rem 0.6rem; border-radius: 4px;
-    letter-spacing: 0.02em;
+    padding: 0.25rem 0.6rem; border-radius: 4px; letter-spacing: 0.02em;
   }
   .project-link {
     display: inline-flex; align-items: center; gap: 0.3rem;
@@ -216,40 +186,29 @@
     position: absolute; top: 1rem; right: 1rem;
     font-size: 0.65rem; font-weight: 500; letter-spacing: 0.08em;
     text-transform: uppercase; color: var(--accent);
-    background: var(--accent-light);
-    padding: 0.2rem 0.5rem; border-radius: 4px;
+    background: var(--accent-light); padding: 0.2rem 0.5rem; border-radius: 4px;
   }
 
   /* SKILLS */
   .skills-wrapper { max-width: 900px; }
-  .skills-row {
-    display: flex; flex-wrap: wrap; gap: 0.75rem;
-    margin-bottom: 2rem;
-  }
+  .skills-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 2rem; }
   .skill-pill {
     display: inline-flex; align-items: center; gap: 0.5rem;
     padding: 0.5rem 1rem;
     background: var(--surface); border: 1px solid var(--border);
-    border-radius: 99px; font-size: 0.85rem; font-weight: 400;
-    color: var(--text);
+    border-radius: 99px; font-size: 0.85rem; font-weight: 400; color: var(--text);
   }
-  .skill-pill .dot {
-    width: 7px; height: 7px; border-radius: 50%;
-  }
+  .skill-pill .dot { width: 7px; height: 7px; border-radius: 50%; }
   .dot-green { background: #4caf7d; }
   .dot-blue  { background: #5e8ac8; }
   .dot-orange{ background: #e07b39; }
   .skills-cat {
     font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--muted);
-    margin-bottom: 0.75rem;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem;
   }
 
   /* CONTACT */
-  .contact-inner {
-    display: flex; flex-direction: column; gap: 2rem;
-    max-width: 560px;
-  }
+  .contact-inner { display: flex; flex-direction: column; gap: 2rem; max-width: 560px; }
   .contact-inner p { color: var(--muted); line-height: 1.8; }
   .contact-links { display: flex; flex-wrap: wrap; gap: 1rem; }
 
@@ -257,16 +216,16 @@
   footer {
     padding: 2rem 5%;
     display: flex; justify-content: space-between; align-items: center;
-    font-size: 0.8rem; color: var(--muted);
-    flex-wrap: wrap; gap: 1rem;
+    font-size: 0.8rem; color: var(--muted); flex-wrap: wrap; gap: 1rem;
   }
 
   /* ANIMATIONS */
   .fade-up {
-    opacity: 0; transform: translateY(24px);
+    opacity: 0;
+    transform: translateY(24px);
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
-  .fade-up.visible { opacity: 1; transform: none; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
 
   @media (max-width: 700px) {
     .about-grid { grid-template-columns: 1fr; }
@@ -311,7 +270,7 @@
   </div>
   <div class="about-grid fade-up">
     <div class="about-text">
-      <h2>Student. Builder.<br/>Security enthusiast.</h2>
+      <h3>Student. Builder.<br/>Security enthusiast.</h3>
       <p>I'm a sophomore with a deep interest in how systems work — and how they break. From competing in CyberPatriot to building full-stack tools, I'm always pushing to learn something new at the edge of what I know.</p>
       <p>When I'm not writing code or doing CTF challenges, I'm running, connecting with professionals in the cybersecurity field, or planning my next project.</p>
     </div>
@@ -343,7 +302,6 @@
     <h2>Projects</h2>
   </div>
   <div class="projects-grid">
-
     <div class="project-card fade-up">
       <div class="badge-featured">Featured</div>
       <div class="project-icon">🏃</div>
@@ -383,7 +341,6 @@
       </div>
       <a href="#" class="project-link">View on GitHub →</a>
     </div>
-
   </div>
 </section>
 
@@ -394,7 +351,6 @@
     <h2>Skills & Tools</h2>
   </div>
   <div class="skills-wrapper fade-up">
-
     <div class="skills-cat">Cybersecurity</div>
     <div class="skills-row">
       <span class="skill-pill"><span class="dot dot-green"></span>Network Defense</span>
@@ -422,7 +378,6 @@
       <span class="skill-pill"><span class="dot dot-orange"></span>Wireshark</span>
       <span class="skill-pill"><span class="dot dot-orange"></span>Burp Suite (learning)</span>
     </div>
-
   </div>
 </section>
 
@@ -433,10 +388,9 @@
     <h2>Contact</h2>
   </div>
   <div class="contact-inner fade-up">
-    <h2>Let's connect.</h2>
     <p>I'm always open to conversations with professionals in cybersecurity, research opportunities, or just talking about cool projects. Feel free to reach out.</p>
     <div class="contact-links">
-      <a href="/cdn-cgi/l/email-protection#dda4b2a8af9db8b0bcb4b1f3beb2b0" class="btn btn-primary">Email me →</a>
+      <a href="mailto:your@email.com" class="btn btn-primary">Email me →</a>
       <a href="https://github.com/" target="_blank" class="btn btn-ghost">GitHub</a>
       <a href="https://linkedin.com/in/" target="_blank" class="btn btn-ghost">LinkedIn</a>
     </div>
@@ -449,10 +403,29 @@
   <span>Built from scratch · Boston, MA</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Fade-up on scroll
+<script>
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
- 
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Also immediately reveal anything already in the viewport on load
+  function revealInView() {
+    document.querySelectorAll('.fade-up').forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight - 50) {
+        el.classList.add('visible');
+      }
+    });
+  }
+  revealInView();
+  window.addEventListener('load', revealInView);
+</script>
+
+</body>
+</html>
