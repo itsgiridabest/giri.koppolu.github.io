@@ -1,9 +1,11 @@
-<html lang="en"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Giri — Cybersecurity &amp; Dev</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=DM+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Giri — Cybersecurity & Dev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -20,8 +22,7 @@
   .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.875rem; font-weight: 400; transition: color 0.2s; }
   .nav-links a:hover { color: var(--text); }
-  .edit-btn { background: var(--accent); color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s; }
-  .edit-btn:hover { background: #0f2418; }
+
 
   /* HERO */
   .hero { min-height: 100vh; display: flex; align-items: center; padding: 0 5%; padding-top: 5rem; border-bottom: 1px solid var(--border); }
@@ -175,14 +176,13 @@
     <li><a href="#skills">Skills</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <button class="edit-btn" onclick="openEditor()">✏️ Edit</button>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-eyebrow" id="hero-eyebrow">CYBERSECURITY · SOFTWARE · BUILDER</div>
-    <h1 id="hero-h1">Hi, I'm Giri.<br><em>I break things</em><br>to understand them.</h1>
+    <div class="hero-eyebrow" id="hero-eyebrow">Cybersecurity · Software · Builder</div>
+    <h1 id="hero-h1">Hi, I'm Giri.<br/><em>I break things</em><br/>to understand them.</h1>
     <p class="hero-sub" id="hero-sub">High school student passionate about cybersecurity, software development, and building tools that actually matter. Currently exploring offensive security, CTFs, and AI-powered applications.</p>
     <div class="hero-cta">
       <a href="#projects" class="btn btn-primary">View my work ↓</a>
@@ -199,7 +199,7 @@
   </div>
   <div class="about-grid">
     <div class="about-text">
-      <h3 id="about-heading">Student. Builder.<br>Security enthusiast.</h3>
+      <h3 id="about-heading">Student. Builder.<br/>Security enthusiast.</h3>
       <p id="about-p1">I'm a sophomore with a deep interest in how systems work — and how they break. From competing in CyberPatriot to building full-stack tools, I'm always pushing to learn something new at the edge of what I know.</p>
       <p id="about-p2">When I'm not writing code or doing CTF challenges, I'm running, connecting with professionals in the cybersecurity field, or planning my next project.</p>
     </div>
@@ -227,6 +227,20 @@
       <div class="project-tags"><span class="tag">Python</span><span class="tag">MediaPipe</span><span class="tag">OpenCV</span><span class="tag">Streamlit</span><span class="tag">Ollama LLM</span></div>
       <a href="#" class="project-link">View on GitHub →</a>
     </div>
+    <div class="project-card">
+      <div class="project-icon">🛡️</div>
+      <h3>CTF Writeups</h3>
+      <p>Documented solutions and methodology notes from picoCTF and other competitions. Covers web exploitation, reverse engineering, cryptography, and binary challenges.</p>
+      <div class="project-tags"><span class="tag">picoCTF</span><span class="tag">Web Exploit</span><span class="tag">Crypto</span><span class="tag">Rev Eng</span></div>
+      <a href="#" class="project-link">View writeups →</a>
+    </div>
+    <div class="project-card">
+      <div class="project-icon">🔧</div>
+      <h3>Tampermonkey Scripts</h3>
+      <p>Custom browser automation and enhancement scripts written in JavaScript. Demonstrates practical scripting, DOM manipulation, and browser extension development.</p>
+      <div class="project-tags"><span class="tag">JavaScript</span><span class="tag">Tampermonkey</span><span class="tag">Browser APIs</span></div>
+      <a href="#" class="project-link">View on GitHub →</a>
+    </div>
   </div>
 </section>
 
@@ -234,15 +248,34 @@
 <section id="skills">
   <div class="section-header">
     <span class="section-num">03</span>
-    <h2>Skills &amp; Tools</h2>
+    <h2>Skills & Tools</h2>
   </div>
   <div class="skills-wrapper" id="skills-wrapper">
     <div class="skills-cat">Cybersecurity</div>
-    <div class="skills-row" id="skills-cyber"><span class="skill-pill"><span class="dot dot-green"></span>Network Defense</span><span class="skill-pill"><span class="dot dot-green"></span>CTF / Capture the Flag(learning)</span><span class="skill-pill"><span class="dot dot-green"></span>Linux Hardening</span><span class="skill-pill"><span class="dot dot-green"></span>CyberPatriot</span><span class="skill-pill"><span class="dot dot-green"></span>Bug Bounty (learning)</span></div>
+    <div class="skills-row" id="skills-cyber">
+      <span class="skill-pill"><span class="dot dot-green"></span>Network Defense</span>
+      <span class="skill-pill"><span class="dot dot-green"></span>CTF / Capture the Flag</span>
+      <span class="skill-pill"><span class="dot dot-green"></span>Linux Hardening</span>
+      <span class="skill-pill"><span class="dot dot-green"></span>CyberPatriot</span>
+      <span class="skill-pill"><span class="dot dot-green"></span>Bug Bounty (learning)</span>
+    </div>
     <div class="skills-cat">Development</div>
-    <div class="skills-row" id="skills-dev"><span class="skill-pill"><span class="dot dot-blue"></span>Python</span><span class="skill-pill"><span class="dot dot-blue"></span>JavaScript</span><span class="skill-pill"><span class="dot dot-blue"></span>OpenCV</span><span class="skill-pill"><span class="dot dot-blue"></span>Streamlit</span><span class="skill-pill"><span class="dot dot-blue"></span>Git / GitHub</span><span class="skill-pill"><span class="dot dot-blue"></span>MediaPipe</span></div>
-    <div class="skills-cat">Tools &amp; Platforms</div>
-    <div class="skills-row" id="skills-tools"><span class="skill-pill"><span class="dot dot-orange"></span>Kali Linux</span><span class="skill-pill"><span class="dot dot-orange"></span>VS Code</span><span class="skill-pill"><span class="dot dot-orange"></span>Ollama (Local LLMs)</span><span class="skill-pill"><span class="dot dot-orange"></span>Wireshark</span></div>
+    <div class="skills-row" id="skills-dev">
+      <span class="skill-pill"><span class="dot dot-blue"></span>Python</span>
+      <span class="skill-pill"><span class="dot dot-blue"></span>JavaScript</span>
+      <span class="skill-pill"><span class="dot dot-blue"></span>OpenCV</span>
+      <span class="skill-pill"><span class="dot dot-blue"></span>Streamlit</span>
+      <span class="skill-pill"><span class="dot dot-blue"></span>Git / GitHub</span>
+      <span class="skill-pill"><span class="dot dot-blue"></span>MediaPipe</span>
+    </div>
+    <div class="skills-cat">Tools & Platforms</div>
+    <div class="skills-row" id="skills-tools">
+      <span class="skill-pill"><span class="dot dot-orange"></span>Kali Linux</span>
+      <span class="skill-pill"><span class="dot dot-orange"></span>VS Code</span>
+      <span class="skill-pill"><span class="dot dot-orange"></span>Ollama (Local LLMs)</span>
+      <span class="skill-pill"><span class="dot dot-orange"></span>Wireshark</span>
+      <span class="skill-pill"><span class="dot dot-orange"></span>Burp Suite (learning)</span>
+    </div>
   </div>
 </section>
 
@@ -255,7 +288,7 @@
   <div class="contact-inner">
     <p id="contact-bio">I'm always open to conversations with professionals in cybersecurity, research opportunities, or just talking about cool projects. Feel free to reach out.</p>
     <div class="contact-links">
-      <a id="contact-email-link" href="mailto:your@email.com" class="btn btn-primary">Email me →</a>
+      <a id="contact-email-link" href="/cdn-cgi/l/email-protection#661f09131426030b070f0a4805090b" class="btn btn-primary">Email me →</a>
       <a id="contact-github-link" href="https://github.com/itsgiridabest" target="_blank" class="btn btn-ghost">GitHub</a>
       <a id="contact-linkedin-link" href="https://linkedin.com/in/" target="_blank" class="btn btn-ghost">LinkedIn</a>
     </div>
@@ -268,31 +301,31 @@
 </footer>
 
 <!-- EDITOR OVERLAY -->
-<div id="editor-overlay" onclick="closeEditor()" class="open"></div>
+<div id="editor-overlay" onclick="closeEditor()"></div>
 
 <!-- EDITOR PANEL -->
-<div id="editor-panel" class="open">
+<div id="editor-panel">
   <div class="ep-header">
     <h3>Edit Portfolio</h3>
     <button class="ep-close" onclick="closeEditor()">×</button>
   </div>
 
   <div class="ep-tabs">
-    <button class="ep-tab" onclick="switchTab('hero')">Hero</button>
+    <button class="ep-tab active" onclick="switchTab('hero')">Hero</button>
     <button class="ep-tab" onclick="switchTab('about')">About</button>
     <button class="ep-tab" onclick="switchTab('projects')">Projects</button>
-    <button class="ep-tab active" onclick="switchTab('skills')">Skills</button>
+    <button class="ep-tab" onclick="switchTab('skills')">Skills</button>
     <button class="ep-tab" onclick="switchTab('contact')">Contact</button>
   </div>
 
   <div class="ep-body">
 
     <!-- HERO TAB -->
-    <div class="ep-section" id="tab-hero">
-      <div class="ep-field"><label>Eyebrow text</label><input id="e-eyebrow" type="text"></div>
-      <div class="ep-field"><label>Heading line 1</label><input id="e-h1-l1" type="text"></div>
-      <div class="ep-field"><label>Heading line 2 (italic)</label><input id="e-h1-l2" type="text"></div>
-      <div class="ep-field"><label>Heading line 3</label><input id="e-h1-l3" type="text"></div>
+    <div class="ep-section active" id="tab-hero">
+      <div class="ep-field"><label>Eyebrow text</label><input id="e-eyebrow" type="text"/></div>
+      <div class="ep-field"><label>Heading line 1</label><input id="e-h1-l1" type="text"/></div>
+      <div class="ep-field"><label>Heading line 2 (italic)</label><input id="e-h1-l2" type="text"/></div>
+      <div class="ep-field"><label>Heading line 3</label><input id="e-h1-l3" type="text"/></div>
       <div class="ep-field"><label>Subheading</label><textarea id="e-sub" rows="3"></textarea></div>
     </div>
 
@@ -302,65 +335,62 @@
       <div class="ep-field"><label>Paragraph 1</label><textarea id="e-about-p1" rows="4"></textarea></div>
       <div class="ep-field"><label>Paragraph 2</label><textarea id="e-about-p2" rows="4"></textarea></div>
       <div class="ep-divider">Stats</div>
-      <div class="ep-field"><label>Stat 1 value</label><input id="e-s1n" type="text"></div>
-      <div class="ep-field"><label>Stat 1 label</label><input id="e-s1l" type="text"></div>
-      <div class="ep-field"><label>Stat 2 value</label><input id="e-s2n" type="text"></div>
-      <div class="ep-field"><label>Stat 2 label</label><input id="e-s2l" type="text"></div>
-      <div class="ep-field"><label>Stat 3 value</label><input id="e-s3n" type="text"></div>
-      <div class="ep-field"><label>Stat 3 label</label><input id="e-s3l" type="text"></div>
-      <div class="ep-field"><label>Stat 4 value</label><input id="e-s4n" type="text"></div>
-      <div class="ep-field"><label>Stat 4 label</label><input id="e-s4l" type="text"></div>
+      <div class="ep-field"><label>Stat 1 value</label><input id="e-s1n" type="text"/></div>
+      <div class="ep-field"><label>Stat 1 label</label><input id="e-s1l" type="text"/></div>
+      <div class="ep-field"><label>Stat 2 value</label><input id="e-s2n" type="text"/></div>
+      <div class="ep-field"><label>Stat 2 label</label><input id="e-s2l" type="text"/></div>
+      <div class="ep-field"><label>Stat 3 value</label><input id="e-s3n" type="text"/></div>
+      <div class="ep-field"><label>Stat 3 label</label><input id="e-s3l" type="text"/></div>
+      <div class="ep-field"><label>Stat 4 value</label><input id="e-s4n" type="text"/></div>
+      <div class="ep-field"><label>Stat 4 label</label><input id="e-s4l" type="text"/></div>
     </div>
 
     <!-- PROJECTS TAB -->
     <div class="ep-section" id="tab-projects">
-      <div id="projects-editor"><div class="proj-block">
-      <div class="ep-field"><label>Icon (emoji)</label><input value="🏃" oninput="projects[0].icon=this.value"></div>
-      <div class="ep-field"><label>Title</label><input value="RunnerTrack" oninput="projects[0].title=this.value"></div>
-      <div class="ep-field"><label>Description</label><textarea rows="3" oninput="projects[0].desc=this.value">A real-time running form analysis app using computer vision. Detects posture, stride, and form issues using MediaPipe pose estimation, displayed in an interactive Streamlit dashboard.</textarea></div>
-      <div class="ep-field"><label>Tags (comma separated)</label><input value="Python, MediaPipe, OpenCV, Streamlit, Ollama LLM" oninput="projects[0].tags=this.value.split(',').map(t=&gt;t.trim()).filter(Boolean)"></div>
-      <div class="ep-field"><label>Link URL</label><input value="#" oninput="projects[0].link=this.value"></div>
-      <div class="ep-field"><label><input type="checkbox" checked="" onchange="projects[0].featured=this.checked"> Featured badge</label></div>
-      <button style="font-size:0.75rem;color:#e05e5e;background:none;border:none;cursor:pointer;padding:0;" onclick="removeProject(0)">Remove project</button>
-    </div><button class="add-skill-btn" style="margin-top: 0.5rem;">+ Add project</button></div>
+      <div id="projects-editor"></div>
     </div>
 
     <!-- SKILLS TAB -->
-    <div class="ep-section active" id="tab-skills">
+    <div class="ep-section" id="tab-skills">
       <div class="ep-divider">Cybersecurity</div>
-      <div id="skills-cyber-editor"><div class="skill-editor-row"><input value="Network Defense" oninput="skills['cyber'][0]=this.value"><button class="skill-del" onclick="removeSkill('cyber',0)">×</button></div><div class="skill-editor-row"><input value="CTF / Capture the Flag" oninput="skills['cyber'][1]=this.value"><button class="skill-del" onclick="removeSkill('cyber',1)">×</button></div><div class="skill-editor-row"><input value="Linux Hardening" oninput="skills['cyber'][2]=this.value"><button class="skill-del" onclick="removeSkill('cyber',2)">×</button></div><div class="skill-editor-row"><input value="CyberPatriot" oninput="skills['cyber'][3]=this.value"><button class="skill-del" onclick="removeSkill('cyber',3)">×</button></div><div class="skill-editor-row"><input value="Bug Bounty (learning)" oninput="skills['cyber'][4]=this.value"><button class="skill-del" onclick="removeSkill('cyber',4)">×</button></div></div>
+      <div id="skills-cyber-editor"></div>
       <button class="add-skill-btn" onclick="addSkill('cyber')">+ Add skill</button>
       <div class="ep-divider" style="margin-top:1.5rem">Development</div>
-      <div id="skills-dev-editor"><div class="skill-editor-row"><input value="Python" oninput="skills['dev'][0]=this.value"><button class="skill-del" onclick="removeSkill('dev',0)">×</button></div><div class="skill-editor-row"><input value="JavaScript" oninput="skills['dev'][1]=this.value"><button class="skill-del" onclick="removeSkill('dev',1)">×</button></div><div class="skill-editor-row"><input value="OpenCV" oninput="skills['dev'][2]=this.value"><button class="skill-del" onclick="removeSkill('dev',2)">×</button></div><div class="skill-editor-row"><input value="Streamlit" oninput="skills['dev'][3]=this.value"><button class="skill-del" onclick="removeSkill('dev',3)">×</button></div><div class="skill-editor-row"><input value="Git / GitHub" oninput="skills['dev'][4]=this.value"><button class="skill-del" onclick="removeSkill('dev',4)">×</button></div><div class="skill-editor-row"><input value="MediaPipe" oninput="skills['dev'][5]=this.value"><button class="skill-del" onclick="removeSkill('dev',5)">×</button></div></div>
+      <div id="skills-dev-editor"></div>
       <button class="add-skill-btn" onclick="addSkill('dev')">+ Add skill</button>
-      <div class="ep-divider" style="margin-top:1.5rem">Tools &amp; Platforms</div>
-      <div id="skills-tools-editor"><div class="skill-editor-row"><input value="Kali Linux" oninput="skills['tools'][0]=this.value"><button class="skill-del" onclick="removeSkill('tools',0)">×</button></div><div class="skill-editor-row"><input value="VS Code" oninput="skills['tools'][1]=this.value"><button class="skill-del" onclick="removeSkill('tools',1)">×</button></div><div class="skill-editor-row"><input value="Ollama (Local LLMs)" oninput="skills['tools'][2]=this.value"><button class="skill-del" onclick="removeSkill('tools',2)">×</button></div><div class="skill-editor-row"><input value="Wireshark" oninput="skills['tools'][3]=this.value"><button class="skill-del" onclick="removeSkill('tools',3)">×</button></div></div>
+      <div class="ep-divider" style="margin-top:1.5rem">Tools & Platforms</div>
+      <div id="skills-tools-editor"></div>
       <button class="add-skill-btn" onclick="addSkill('tools')">+ Add skill</button>
     </div>
 
     <!-- CONTACT TAB -->
     <div class="ep-section" id="tab-contact">
       <div class="ep-field"><label>Bio text</label><textarea id="e-contact-bio" rows="4"></textarea></div>
-      <div class="ep-field"><label>Email address</label><input id="e-email" type="email"></div>
-      <div class="ep-field"><label>GitHub URL</label><input id="e-github" type="url"></div>
-      <div class="ep-field"><label>LinkedIn URL</label><input id="e-linkedin" type="url"></div>
+      <div class="ep-field"><label>Email address</label><input id="e-email" type="email"/></div>
+      <div class="ep-field"><label>GitHub URL</label><input id="e-github" type="url"/></div>
+      <div class="ep-field"><label>LinkedIn URL</label><input id="e-linkedin" type="url"/></div>
       <div class="ep-divider">Footer</div>
-      <div class="ep-field"><label>Footer left text</label><input id="e-footer-l" type="text"></div>
-      <div class="ep-field"><label>Footer right text</label><input id="e-footer-r" type="text"></div>
+      <div class="ep-field"><label>Footer left text</label><input id="e-footer-l" type="text"/></div>
+      <div class="ep-field"><label>Footer right text</label><input id="e-footer-r" type="text"/></div>
     </div>
 
   </div>
 
   <div class="ep-footer">
     <div class="ep-token-row">
-      <input type="password" id="gh-token" placeholder="GitHub PAT (ghp_...)">
+      <input type="password" id="gh-token" placeholder="GitHub PAT (ghp_...)"/>
     </div>
-    <button class="ep-save" onclick="saveAndCommit()" disabled="">Save &amp; Publish to GitHub</button>
-    <div class="ep-status loading" id="ep-status">Publishing…</div>
+    <button class="ep-save" onclick="saveAndCommit()">Save & Publish to GitHub</button>
+    <div class="ep-status" id="ep-status"></div>
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Auto-open editor if ?edit=true is in the URL
+if (new URLSearchParams(window.location.search).get('edit') === 'true') {
+  window.addEventListener('DOMContentLoaded', () => openEditor());
+}
+
 const GITHUB_USER = 'itsgiridabest';
 const GITHUB_REPO = 'itsgiridabest.github.io';
 const GITHUB_FILE = 'index.html';
@@ -585,12 +615,4 @@ async function saveAndCommit() {
   }
 }
 
-function setStatus(type, msg) {
-  const el = document.getElementById('ep-status');
-  el.className = 'ep-status ' + type;
-  el.innerText = msg;
-}
-</script>
-
-
-</body></html>
+function setStatus(type, m
