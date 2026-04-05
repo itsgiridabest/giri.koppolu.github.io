@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Giri — Cybersecurity & Dev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f7f6f2; --surface: #ffffff; --text: #111110;
+    --muted: #7a7a72; --accent: #1a3a2a; --accent-light: #e8f0eb;
+    --border: #e2e0d8; --tag-bg: #efefeb;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.6; font-size: 16px; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 5%; background: rgba(247,246,242,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.25rem; letter-spacing: -0.02em; color: var(--text); text-decoration: none; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.875rem; font-weight: 400; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .edit-btn { background: var(--accent); color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s; }
+  .edit-btn:hover { background: #0f2418; }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: flex; align-items: center; padding: 0 5%; padding-top: 5rem; border-bottom: 1px solid var(--border); }
+  .hero-inner { max-width: 820px; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 0.3rem 0.75rem; border-radius: 99px; margin-bottom: 2rem; }
+  .hero-eyebrow::before { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(3rem, 7vw, 5.5rem); line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 480px; line-height: 1.75; margin-bottom: 2.5rem; }
+  .hero-cta { display: inline-flex; gap: 1rem; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.75rem 1.5rem; font-family: 'DM Sans', sans-serif; font-size: 0.875rem; font-weight: 500; border-radius: 6px; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #0f2418; }
+  .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  .btn-ghost:hover { background: var(--surface); }
+
+  /* SECTIONS */
+  section { padding: 6rem 5%; border-bottom: 1px solid var(--border); }
+  .section-header { display: flex; align-items: baseline; gap: 1.5rem; margin-bottom: 3.5rem; padding-bottom: 1.25rem; border-bottom: 2px solid var(--text); }
+  .section-header h2 { font-family: 'DM Serif Display', serif; font-size: clamp(2.25rem, 5vw, 3.5rem); letter-spacing: -0.03em; line-height: 1; }
+  .section-num { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; max-width: 1000px; }
+  .about-text h3 { font-family: 'DM Serif Display', serif; font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 1.25rem; }
+  .about-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; }
+  .stat-num { font-family: 'DM Serif Display', serif; font-size: 2.25rem; color: var(--accent); letter-spacing: -0.03em; }
+  .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; max-width: 1100px; }
+  .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; display: flex; flex-direction: column; gap: 1rem; transition: box-shadow 0.2s, transform 0.2s; position: relative; overflow: hidden; }
+  .project-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.07); }
+  .project-icon { width: 44px; height: 44px; border-radius: 10px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+  .project-card h3 { font-family: 'DM Serif Display', serif; font-size: 1.35rem; letter-spacing: -0.01em; }
+  .project-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; }
+  .tag { font-size: 0.72rem; font-weight: 500; background: var(--tag-bg); color: var(--muted); padding: 0.25rem 0.6rem; border-radius: 4px; }
+  .project-link { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.8rem; font-weight: 500; color: var(--accent); text-decoration: none; margin-top: 0.5rem; }
+  .project-link:hover { text-decoration: underline; }
+  .badge-featured { position: absolute; top: 1rem; right: 1rem; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+  /* SKILLS */
+  .skills-wrapper { max-width: 900px; }
+  .skills-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 2rem; }
+  .skill-pill { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 99px; font-size: 0.85rem; font-weight: 400; color: var(--text); }
+  .skill-pill .dot { width: 7px; height: 7px; border-radius: 50%; }
+  .dot-green { background: #4caf7d; }
+  .dot-blue  { background: #5e8ac8; }
+  .dot-orange{ background: #e07b39; }
+  .skills-cat { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem; }
+
+  /* CONTACT */
+  .contact-inner { display: flex; flex-direction: column; gap: 2rem; max-width: 560px; }
+  .contact-inner p { color: var(--muted); line-height: 1.8; }
+  .contact-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+
+  /* FOOTER */
+  footer { padding: 2rem 5%; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--muted); flex-wrap: wrap; gap: 1rem; }
+
+  @media (max-width: 700px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+
+  /* ===== EDITOR PANEL ===== */
+  #editor-overlay {
+    display: none; position: fixed; inset: 0; z-index: 999;
+    background: rgba(0,0,0,0.4); backdrop-filter: blur(4px);
+  }
+  #editor-overlay.open { display: block; }
+  #editor-panel {
+    position: fixed; top: 0; right: -520px; width: 500px; max-width: 95vw;
+    height: 100vh; background: #fff; z-index: 1000;
+    box-shadow: -8px 0 40px rgba(0,0,0,0.12);
+    display: flex; flex-direction: column;
+    transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
+    font-family: 'DM Sans', sans-serif;
+  }
+  #editor-panel.open { right: 0; }
+  .ep-header {
+    padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-shrink: 0;
+  }
+  .ep-header h3 { font-family: 'DM Serif Display', serif; font-size: 1.2rem; }
+  .ep-close { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--muted); line-height: 1; }
+  .ep-tabs {
+    display: flex; border-bottom: 1px solid var(--border); flex-shrink: 0; overflow-x: auto;
+  }
+  .ep-tab {
+    padding: 0.75rem 1rem; font-size: 0.8rem; font-weight: 500;
+    border: none; background: none; cursor: pointer; color: var(--muted);
+    border-bottom: 2px solid transparent; white-space: nowrap;
+    font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+  }
+  .ep-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .ep-body { flex: 1; overflow-y: auto; padding: 1.5rem; }
+  .ep-section { display: none; }
+  .ep-section.active { display: block; }
+  .ep-field { margin-bottom: 1.25rem; }
+  .ep-field label { display: block; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+  .ep-field input, .ep-field textarea {
+    width: 100%; padding: 0.6rem 0.75rem;
+    border: 1px solid var(--border); border-radius: 6px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.875rem;
+    color: var(--text); background: var(--bg);
+    transition: border-color 0.15s; resize: vertical;
+  }
+  .ep-field input:focus, .ep-field textarea:focus { outline: none; border-color: var(--accent); }
+  .ep-divider { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 1.5rem 0 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+  .ep-footer {
+    padding: 1rem 1.5rem; border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 0.75rem; flex-shrink: 0;
+  }
+  .ep-token-row { display: flex; gap: 0.5rem; }
+  .ep-token-row input { flex: 1; padding: 0.5rem 0.75rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.8rem; font-family: 'DM Sans', sans-serif; }
+  .ep-save {
+    background: var(--accent); color: #fff; border: none;
+    padding: 0.75rem; border-radius: 6px; font-size: 0.875rem;
+    font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s;
+  }
+  .ep-save:hover { background: #0f2418; }
+  .ep-save:disabled { background: var(--muted); cursor: not-allowed; }
+  .ep-status { font-size: 0.8rem; text-align: center; min-height: 1.2em; }
+  .ep-status.ok { color: #4caf7d; }
+  .ep-status.err { color: #e05e5e; }
+  .ep-status.loading { color: var(--muted); }
+
+  /* skills editor */
+  .skill-editor-row { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center; }
+  .skill-editor-row input { flex: 1; padding: 0.45rem 0.6rem; border: 1px solid var(--border); border-radius: 5px; font-size: 0.8rem; font-family: 'DM Sans', sans-serif; }
+  .skill-del { background: none; border: none; cursor: pointer; color: #e05e5e; font-size: 1rem; padding: 0 0.3rem; }
+  .add-skill-btn { font-size: 0.78rem; background: var(--accent-light); color: var(--accent); border: none; padding: 0.4rem 0.8rem; border-radius: 5px; cursor: pointer; font-weight: 500; font-family: 'DM Sans', sans-serif; margin-top: 0.25rem; }
+
+  /* project editor */
+  .proj-block { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Giri.</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="edit-btn" onclick="openEditor()">✏️ Edit</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow" id="hero-eyebrow">Cybersecurity · Software · Builder</div>
+    <h1 id="hero-h1">Hi, I'm Giri.<br/><em>I break things</em><br/>to understand them.</h1>
+    <p class="hero-sub" id="hero-sub">High school student passionate about cybersecurity, software development, and building tools that actually matter. Currently exploring offensive security, CTFs, and AI-powered applications.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View my work ↓</a>
+      <a href="#contact" class="btn btn-ghost">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>About</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <h3 id="about-heading">Student. Builder.<br/>Security enthusiast.</h3>
+      <p id="about-p1">I'm a sophomore with a deep interest in how systems work — and how they break. From competing in CyberPatriot to building full-stack tools, I'm always pushing to learn something new at the edge of what I know.</p>
+      <p id="about-p2">When I'm not writing code or doing CTF challenges, I'm running, connecting with professionals in the cybersecurity field, or planning my next project.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card"><div class="stat-num" id="stat1-num">Platinum</div><div class="stat-label" id="stat1-label">CyberPatriot rank</div></div>
+      <div class="stat-card"><div class="stat-num" id="stat2-num">10th</div><div class="stat-label" id="stat2-label">Grade</div></div>
+      <div class="stat-card"><div class="stat-num" id="stat3-num">Boston</div><div class="stat-label" id="stat3-label">Area, MA</div></div>
+      <div class="stat-card"><div class="stat-num" id="stat4-num">MIT</div><div class="stat-label" id="stat4-label">Blueprint alum</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>Projects</h2>
+  </div>
+  <div class="projects-grid" id="projects-grid">
+    <div class="project-card">
+      <div class="badge-featured">Featured</div>
+      <div class="project-icon">🏃</div>
+      <h3>RunnerTrack</h3>
+      <p>A real-time running form analysis app using computer vision. Detects posture, stride, and form issues using MediaPipe pose estimation, displayed in an interactive Streamlit dashboard.</p>
+      <div class="project-tags"><span class="tag">Python</span><span class="tag">MediaPipe</span><span class="tag">OpenCV</span><span class="tag">Streamlit</span><span class="tag">Ollama LLM</span></div>
+      <a href="#" class="project-link">View on GitHub →</a>
+    </div>
+    <div class="project-card">
+      <div class="project-icon">🛡️</div>
+      <h3>CTF Writeups</h3>
+      <p>Documented solutions and methodology notes from picoCTF and other competitions. Covers web exploitation, reverse engineering, cryptography, and binary challenges.</p>
+      <div class="project-tags"><span class="tag">picoCTF</span><span class="tag">Web Exploit</span><span class="tag">Crypto</span><span class="tag">Rev Eng</span></div>
+      <a href="#" class="project-link">View writeups →</a>
+    </div>
+    <div class="project-card">
+      <div class="project-icon">🔧</div>
+      <h3>Tampermonkey Scripts</h3>
+      <p>Custom browser automation and enhancement scripts written in JavaScript. Demonstrates practical scripting, DOM manipulation, and browser extension development.</p>
+      <div class="project-tags"><span class="tag">JavaScript</span><span class="tag">Tampermonkey</span><span class="tag">Browser APIs</span></div>
+      <a href="#" class="project-link">View on GitHub →</a>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2>Skills & Tools</h2>
+  </div>
+  <div class="skills-wrapper" id="skills-wrapper">
+    <div class="skills-cat">Cybersecurity</div>
+    <div class="skills-row" id="skills-cyber">
+      <span class="skill-pill"><span class="dot dot-green"></span>Network Defense</span>
+      <span class="skill-pill"><span class="dot dot-green"></span>CTF / Capture the Flag</span>
+      <span class="skill-pill"><span class="dot dot-green"></span>Linux Hardening</span>
+      <span class="skill-pill"><span class="dot dot-green"></span>CyberPatriot</span>
+      <span class="skill-pill"><span class="dot dot-green"></span>Bug Bounty (learning)</span>
+    </div>
+    <div class="skills-cat">Development</div>
+    <div class="skills-row" id="skills-dev">
+      <span class="skill-pill"><span class="dot dot-blue"></span>Python</span>
+      <span class="skill-pill"><span class="dot dot-blue"></span>JavaScript</span>
+      <span class="skill-pill"><span class="dot dot-blue"></span>OpenCV</span>
+      <span class="skill-pill"><span class="dot dot-blue"></span>Streamlit</span>
+      <span class="skill-pill"><span class="dot dot-blue"></span>Git / GitHub</span>
+      <span class="skill-pill"><span class="dot dot-blue"></span>MediaPipe</span>
+    </div>
+    <div class="skills-cat">Tools & Platforms</div>
+    <div class="skills-row" id="skills-tools">
+      <span class="skill-pill"><span class="dot dot-orange"></span>Kali Linux</span>
+      <span class="skill-pill"><span class="dot dot-orange"></span>VS Code</span>
+      <span class="skill-pill"><span class="dot dot-orange"></span>Ollama (Local LLMs)</span>
+      <span class="skill-pill"><span class="dot dot-orange"></span>Wireshark</span>
+      <span class="skill-pill"><span class="dot dot-orange"></span>Burp Suite (learning)</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2>Contact</h2>
+  </div>
+  <div class="contact-inner">
+    <p id="contact-bio">I'm always open to conversations with professionals in cybersecurity, research opportunities, or just talking about cool projects. Feel free to reach out.</p>
+    <div class="contact-links">
+      <a id="contact-email-link" href="mailto:your@email.com" class="btn btn-primary">Email me →</a>
+      <a id="contact-github-link" href="https://github.com/itsgiridabest" target="_blank" class="btn btn-ghost">GitHub</a>
+      <a id="contact-linkedin-link" href="https://linkedin.com/in/" target="_blank" class="btn btn-ghost">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span id="footer-left">© 2026 Giri. All rights reserved.</span>
+  <span id="footer-right">Built from scratch · Boston, MA</span>
+</footer>
+
+<!-- EDITOR OVERLAY -->
+<div id="editor-overlay" onclick="closeEditor()"></div>
+
+<!-- EDITOR PANEL -->
+<div id="editor-panel">
+  <div class="ep-header">
+    <h3>Edit Portfolio</h3>
+    <button class="ep-close" onclick="closeEditor()">×</button>
+  </div>
+
+  <div class="ep-tabs">
+    <button class="ep-tab active" onclick="switchTab('hero')">Hero</button>
+    <button class="ep-tab" onclick="switchTab('about')">About</button>
+    <button class="ep-tab" onclick="switchTab('projects')">Projects</button>
+    <button class="ep-tab" onclick="switchTab('skills')">Skills</button>
+    <button class="ep-tab" onclick="switchTab('contact')">Contact</button>
+  </div>
+
+  <div class="ep-body">
+
+    <!-- HERO TAB -->
+    <div class="ep-section active" id="tab-hero">
+      <div class="ep-field"><label>Eyebrow text</label><input id="e-eyebrow" type="text"/></div>
+      <div class="ep-field"><label>Heading line 1</label><input id="e-h1-l1" type="text"/></div>
+      <div class="ep-field"><label>Heading line 2 (italic)</label><input id="e-h1-l2" type="text"/></div>
+      <div class="ep-field"><label>Heading line 3</label><input id="e-h1-l3" type="text"/></div>
+      <div class="ep-field"><label>Subheading</label><textarea id="e-sub" rows="3"></textarea></div>
+    </div>
+
+    <!-- ABOUT TAB -->
+    <div class="ep-section" id="tab-about">
+      <div class="ep-field"><label>Section heading</label><textarea id="e-about-h" rows="2"></textarea></div>
+      <div class="ep-field"><label>Paragraph 1</label><textarea id="e-about-p1" rows="4"></textarea></div>
+      <div class="ep-field"><label>Paragraph 2</label><textarea id="e-about-p2" rows="4"></textarea></div>
+      <div class="ep-divider">Stats</div>
+      <div class="ep-field"><label>Stat 1 value</label><input id="e-s1n" type="text"/></div>
+      <div class="ep-field"><label>Stat 1 label</label><input id="e-s1l" type="text"/></div>
+      <div class="ep-field"><label>Stat 2 value</label><input id="e-s2n" type="text"/></div>
+      <div class="ep-field"><label>Stat 2 label</label><input id="e-s2l" type="text"/></div>
+      <div class="ep-field"><label>Stat 3 value</label><input id="e-s3n" type="text"/></div>
+      <div class="ep-field"><label>Stat 3 label</label><input id="e-s3l" type="text"/></div>
+      <div class="ep-field"><label>Stat 4 value</label><input id="e-s4n" type="text"/></div>
+      <div class="ep-field"><label>Stat 4 label</label><input id="e-s4l" type="text"/></div>
+    </div>
+
+    <!-- PROJECTS TAB -->
+    <div class="ep-section" id="tab-projects">
+      <div id="projects-editor"></div>
+    </div>
+
+    <!-- SKILLS TAB -->
+    <div class="ep-section" id="tab-skills">
+      <div class="ep-divider">Cybersecurity</div>
+      <div id="skills-cyber-editor"></div>
+      <button class="add-skill-btn" onclick="addSkill('cyber')">+ Add skill</button>
+      <div class="ep-divider" style="margin-top:1.5rem">Development</div>
+      <div id="skills-dev-editor"></div>
+      <button class="add-skill-btn" onclick="addSkill('dev')">+ Add skill</button>
+      <div class="ep-divider" style="margin-top:1.5rem">Tools & Platforms</div>
+      <div id="skills-tools-editor"></div>
+      <button class="add-skill-btn" onclick="addSkill('tools')">+ Add skill</button>
+    </div>
+
+    <!-- CONTACT TAB -->
+    <div class="ep-section" id="tab-contact">
+      <div class="ep-field"><label>Bio text</label><textarea id="e-contact-bio" rows="4"></textarea></div>
+      <div class="ep-field"><label>Email address</label><input id="e-email" type="email"/></div>
+      <div class="ep-field"><label>GitHub URL</label><input id="e-github" type="url"/></div>
+      <div class="ep-field"><label>LinkedIn URL</label><input id="e-linkedin" type="url"/></div>
+      <div class="ep-divider">Footer</div>
+      <div class="ep-field"><label>Footer left text</label><input id="e-footer-l" type="text"/></div>
+      <div class="ep-field"><label>Footer right text</label><input id="e-footer-r" type="text"/></div>
+    </div>
+
+  </div>
+
+  <div class="ep-footer">
+    <div class="ep-token-row">
+      <input type="password" id="gh-token" placeholder="GitHub PAT (ghp_...)"/>
+    </div>
+    <button class="ep-save" onclick="saveAndCommit()">Save & Publish to GitHub</button>
+    <div class="ep-status" id="ep-status"></div>
+  </div>
+</div>
+
+<script>
+const GITHUB_USER = 'itsgiridabest';
+const GITHUB_REPO = 'itsgiridabest.github.io';
+const GITHUB_FILE = 'index.html';
+
+// ---- State ----
+let projects = [
+  { icon:'🏃', title:'RunnerTrack', desc:'A real-time running form analysis app using computer vision. Detects posture, stride, and form issues using MediaPipe pose estimation, displayed in an interactive Streamlit dashboard.', tags:['Python','MediaPipe','OpenCV','Streamlit','Ollama LLM'], link:'#', featured:true },
+  { icon:'🛡️', title:'CTF Writeups', desc:'Documented solutions and methodology notes from picoCTF and other competitions. Covers web exploitation, reverse engineering, cryptography, and binary challenges.', tags:['picoCTF','Web Exploit','Crypto','Rev Eng'], link:'#', featured:false },
+  { icon:'🔧', title:'Tampermonkey Scripts', desc:'Custom browser automation and enhancement scripts written in JavaScript. Demonstrates practical scripting, DOM manipulation, and browser extension development.', tags:['JavaScript','Tampermonkey','Browser APIs'], link:'#', featured:false },
+];
+let skills = {
+  cyber: ['Network Defense','CTF / Capture the Flag','Linux Hardening','CyberPatriot','Bug Bounty (learning)'],
+  dev:   ['Python','JavaScript','OpenCV','Streamlit','Git / GitHub','MediaPipe'],
+  tools: ['Kali Linux','VS Code','Ollama (Local LLMs)','Wireshark','Burp Suite (learning)'],
+};
+
+// ---- Editor open/close ----
+function openEditor() {
+  loadEditorFields();
+  document.getElementById('editor-overlay').classList.add('open');
+  document.getElementById('editor-panel').classList.add('open');
+}
+function closeEditor() {
+  document.getElementById('editor-overlay').classList.remove('open');
+  document.getElementById('editor-panel').classList.remove('open');
+}
+
+// ---- Tab switching ----
+function switchTab(name) {
+  document.querySelectorAll('.ep-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.ep-section').forEach(s => s.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+// ---- Load current page values into editor ----
+function loadEditorFields() {
+  // Hero
+  const h1 = document.getElementById('hero-h1');
+  const lines = h1.innerText.split('\n').map(s => s.trim()).filter(Boolean);
+  document.getElementById('e-eyebrow').value = document.getElementById('hero-eyebrow').innerText;
+  document.getElementById('e-h1-l1').value = lines[0] || '';
+  document.getElementById('e-h1-l2').value = lines[1] || '';
+  document.getElementById('e-h1-l3').value = lines[2] || '';
+  document.getElementById('e-sub').value = document.getElementById('hero-sub').innerText;
+
+  // About
+  document.getElementById('e-about-h').value = document.getElementById('about-heading').innerText;
+  document.getElementById('e-about-p1').value = document.getElementById('about-p1').innerText;
+  document.getElementById('e-about-p2').value = document.getElementById('about-p2').innerText;
+  document.getElementById('e-s1n').value = document.getElementById('stat1-num').innerText;
+  document.getElementById('e-s1l').value = document.getElementById('stat1-label').innerText;
+  document.getElementById('e-s2n').value = document.getElementById('stat2-num').innerText;
+  document.getElementById('e-s2l').value = document.getElementById('stat2-label').innerText;
+  document.getElementById('e-s3n').value = document.getElementById('stat3-num').innerText;
+  document.getElementById('e-s3l').value = document.getElementById('stat3-label').innerText;
+  document.getElementById('e-s4n').value = document.getElementById('stat4-num').innerText;
+  document.getElementById('e-s4l').value = document.getElementById('stat4-label').innerText;
+
+  // Contact
+  document.getElementById('e-contact-bio').value = document.getElementById('contact-bio').innerText;
+  document.getElementById('e-email').value = document.getElementById('contact-email-link').href.replace('mailto:','');
+  document.getElementById('e-github').value = document.getElementById('contact-github-link').href;
+  document.getElementById('e-linkedin').value = document.getElementById('contact-linkedin-link').href;
+  document.getElementById('e-footer-l').value = document.getElementById('footer-left').innerText;
+  document.getElementById('e-footer-r').value = document.getElementById('footer-right').innerText;
+
+  // Projects
+  renderProjectsEditor();
+
+  // Skills
+  renderSkillsEditor('cyber');
+  renderSkillsEditor('dev');
+  renderSkillsEditor('tools');
+}
+
+// ---- Projects editor ----
+function renderProjectsEditor() {
+  const container = document.getElementById('projects-editor');
+  container.innerHTML = '';
+  projects.forEach((p, i) => {
+    const div = document.createElement('div');
+    div.className = 'proj-block';
+    div.innerHTML = `
+      <div class="ep-field"><label>Icon (emoji)</label><input value="${p.icon}" oninput="projects[${i}].icon=this.value"/></div>
+      <div class="ep-field"><label>Title</label><input value="${p.title}" oninput="projects[${i}].title=this.value"/></div>
+      <div class="ep-field"><label>Description</label><textarea rows="3" oninput="projects[${i}].desc=this.value">${p.desc}</textarea></div>
+      <div class="ep-field"><label>Tags (comma separated)</label><input value="${p.tags.join(', ')}" oninput="projects[${i}].tags=this.value.split(',').map(t=>t.trim()).filter(Boolean)"/></div>
+      <div class="ep-field"><label>Link URL</label><input value="${p.link}" oninput="projects[${i}].link=this.value"/></div>
+      <div class="ep-field"><label><input type="checkbox" ${p.featured?'checked':''} onchange="projects[${i}].featured=this.checked"/> Featured badge</label></div>
+      <button style="font-size:0.75rem;color:#e05e5e;background:none;border:none;cursor:pointer;padding:0;" onclick="removeProject(${i})">Remove project</button>
+    `;
+    container.appendChild(div);
+  });
+  const addBtn = document.createElement('button');
+  addBtn.className = 'add-skill-btn';
+  addBtn.style.marginTop = '0.5rem';
+  addBtn.innerText = '+ Add project';
+  addBtn.onclick = () => {
+    projects.push({ icon:'🔹', title:'New Project', desc:'Description here.', tags:['Tag'], link:'#', featured:false });
+    renderProjectsEditor();
+  };
+  container.appendChild(addBtn);
+}
+function removeProject(i) {
+  projects.splice(i, 1);
+  renderProjectsEditor();
+}
+
+// ---- Skills editor ----
+function renderSkillsEditor(cat) {
+  const container = document.getElementById('skills-' + cat + '-editor');
+  container.innerHTML = '';
+  skills[cat].forEach((s, i) => {
+    const row = document.createElement('div');
+    row.className = 'skill-editor-row';
+    row.innerHTML = `<input value="${s}" oninput="skills['${cat}'][${i}]=this.value"/><button class="skill-del" onclick="removeSkill('${cat}',${i})">×</button>`;
+    container.appendChild(row);
+  });
+}
+function addSkill(cat) {
+  skills[cat].push('New skill');
+  renderSkillsEditor(cat);
+}
+function removeSkill(cat, i) {
+  skills[cat].splice(i, 1);
+  renderSkillsEditor(cat);
+}
+
+// ---- Apply edits to the live page ----
+function applyEdits() {
+  // Hero
+  document.getElementById('hero-eyebrow').innerText = document.getElementById('e-eyebrow').value;
+  const l1 = document.getElementById('e-h1-l1').value;
+  const l2 = document.getElementById('e-h1-l2').value;
+  const l3 = document.getElementById('e-h1-l3').value;
+  document.getElementById('hero-h1').innerHTML = `${l1}<br/><em>${l2}</em><br/>${l3}`;
+  document.getElementById('hero-sub').innerText = document.getElementById('e-sub').value;
+
+  // About
+  document.getElementById('about-heading').innerHTML = document.getElementById('e-about-h').value.replace('\n','<br/>');
+  document.getElementById('about-p1').innerText = document.getElementById('e-about-p1').value;
+  document.getElementById('about-p2').innerText = document.getElementById('e-about-p2').value;
+  document.getElementById('stat1-num').innerText = document.getElementById('e-s1n').value;
+  document.getElementById('stat1-label').innerText = document.getElementById('e-s1l').value;
+  document.getElementById('stat2-num').innerText = document.getElementById('e-s2n').value;
+  document.getElementById('stat2-label').innerText = document.getElementById('e-s2l').value;
+  document.getElementById('stat3-num').innerText = document.getElementById('e-s3n').value;
+  document.getElementById('stat3-label').innerText = document.getElementById('e-s3l').value;
+  document.getElementById('stat4-num').innerText = document.getElementById('e-s4n').value;
+  document.getElementById('stat4-label').innerText = document.getElementById('e-s4l').value;
+
+  // Projects
+  const grid = document.getElementById('projects-grid');
+  grid.innerHTML = projects.map(p => `
+    <div class="project-card">
+      ${p.featured ? '<div class="badge-featured">Featured</div>' : ''}
+      <div class="project-icon">${p.icon}</div>
+      <h3>${p.title}</h3>
+      <p>${p.desc}</p>
+      <div class="project-tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      <a href="${p.link}" class="project-link">View on GitHub →</a>
+    </div>
+  `).join('');
+
+  // Skills
+  const dotMap = { cyber:'dot-green', dev:'dot-blue', tools:'dot-orange' };
+  ['cyber','dev','tools'].forEach(cat => {
+    document.getElementById('skills-' + cat).innerHTML = skills[cat]
+      .map(s => `<span class="skill-pill"><span class="dot ${dotMap[cat]}"></span>${s}</span>`)
+      .join('');
+  });
+
+  // Contact
+  document.getElementById('contact-bio').innerText = document.getElementById('e-contact-bio').value;
+  document.getElementById('contact-email-link').href = 'mailto:' + document.getElementById('e-email').value;
+  document.getElementById('contact-github-link').href = document.getElementById('e-github').value;
+  document.getElementById('contact-linkedin-link').href = document.getElementById('e-linkedin').value;
+  document.getElementById('footer-left').innerText = document.getElementById('e-footer-l').value;
+  document.getElementById('footer-right').innerText = document.getElementById('e-footer-r').value;
+}
+
+// ---- Commit to GitHub ----
+async function saveAndCommit() {
+  const token = document.getElementById('gh-token').value.trim();
+  if (!token) { setStatus('err', 'Please enter your GitHub PAT first.'); return; }
+
+  applyEdits();
+
+  const btn = document.querySelector('.ep-save');
+  btn.disabled = true;
+  setStatus('loading', 'Publishing…');
+
+  try {
+    // Get current file SHA
+    const metaRes = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`, {
+      headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github+json' }
+    });
+    if (!metaRes.ok) throw new Error('Could not fetch file from GitHub. Check your PAT and repo name.');
+    const meta = await metaRes.json();
+    const sha = meta.sha;
+
+    // Get current HTML and strip editor script data (save clean version)
+    const html = document.documentElement.outerHTML;
+    const encoded = btoa(unescape(encodeURIComponent(html)));
+
+    // Commit
+    const commitRes = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`, {
+      method: 'PUT',
+      headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: 'Update portfolio content', content: encoded, sha })
+    });
+    if (!commitRes.ok) {
+      const err = await commitRes.json();
+      throw new Error(err.message || 'Commit failed');
+    }
+    setStatus('ok', '✓ Published! Changes live in ~30 seconds.');
+  } catch(e) {
+    setStatus('err', '✗ ' + e.message);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function setStatus(type, msg) {
+  const el = document.getElementById('ep-status');
+  el.className = 'ep-status ' + type;
+  el.innerText = msg;
+}
+</script>
+</body>
+</html>
