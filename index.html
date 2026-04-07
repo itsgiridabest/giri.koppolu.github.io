@@ -1,65 +1,757 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giri — Cybersecurity & Dev</title>
-    <meta name="description" content="Giri's portfolio. Exploring cybersecurity, full-stack dev, and more.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        :root {
-            --bg: #f7f6f2;
-            --surface: #ffffff;
-            --text: #111110;
-            --muted: #7a7a72;
-            --accent: #1a3a2a;
-            --accent-light: #e8f0eb;
-            --border: #e2e0d8;
-            --tag-bg: #efefeb;
-            --nav-h: 64px;
-        }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Giri — Cybersecurity & Dev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f7f6f2; --surface: #ffffff; --text: #111110;
+  --muted: #7a7a72; --accent: #1a3a2a; --accent-light: #e8f0eb;
+  --border: #e2e0d8; --tag-bg: #efefeb; --nav-h: 64px;
+}
+html, body { height: 100%; overflow: hidden; }
+body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.6; font-size: 16px; }
 
-        html, body {
-            height: 100%;
-            overflow: hidden;
-        }
+/* ── NAV ── */
+nav {
+position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+height: var(–nav-h);
+display: flex; justify-content: space-between; align-items: center;
+padding: 0 5%;
+background: rgba(247,246,242,0.97); backdrop-filter: blur(12px);
+border-bottom: 1px solid var(–border);
+}
+.nav-logo { font-family: ‘DM Serif Display’, serif; font-size: 1.2rem; letter-spacing: -0.02em; color: var(–text); cursor: pointer; }
+.nav-links { display: flex; gap: 1.75rem; list-style: none; }
+.nav-links a { color: var(–muted); font-size: 0.82rem; font-weight: 400; cursor: pointer; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(–text); font-weight: 500; }
 
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 300;
-            line-height: 1.6;
-            font-size: 16px;
-        }
-        /* Styling additional updates in correct syntax */
-    </style>
+/* hamburger */
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.hamburger span { display: block; width: 22px; height: 2px; background: var(–text); border-radius: 2px; transition: all 0.25s; }
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* mobile drawer */
+.mobile-menu {
+display: none; position: fixed; top: var(–nav-h); left: 0; right: 0;
+background: var(–surface); border-bottom: 1px solid var(–border);
+z-index: 299; padding: 1rem 5%;
+flex-direction: column; gap: 0;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a { display: block; padding: 0.85rem 0; color: var(–text); font-size: 1rem; font-weight: 400; border-bottom: 1px solid var(–border); cursor: pointer; }
+.mobile-menu a:last-child { border-bottom: none; }
+
+/* ── APP ── */
+#app { position: fixed; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden; }
+
+/* ── PAGES ── */
+.page {
+position: absolute; inset: 0; overflow-y: auto;
+padding-top: var(–nav-h);
+opacity: 0; pointer-events: none;
+transition: opacity 0.38s ease, transform 0.38s ease;
+transform: translateY(16px);
+}
+.page.active { opacity: 1; pointer-events: all; transform: translateY(0); }
+.page.exit { opacity: 0; transform: translateY(-12px); }
+
+/* ── SHARED ── */
+.btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.7rem 1.4rem; font-family: ‘DM Sans’, sans-serif; font-size: 0.875rem; font-weight: 500; border-radius: 6px; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; }
+.btn-primary { background: var(–accent); color: #fff; }
+.btn-primary:hover { background: #0f2418; }
+.btn-ghost { background: transparent; color: var(–text); border: 1px solid var(–border); }
+.btn-ghost:hover { background: var(–surface); }
+.page-header { display: flex; align-items: baseline; gap: 1.25rem; margin-bottom: 3rem; padding-bottom: 1.1rem; border-bottom: 2px solid var(–text); }
+.page-header h1 { font-family: ‘DM Serif Display’, serif; font-size: clamp(2.2rem, 6vw, 4rem); letter-spacing: -0.03em; line-height: 1; }
+.page-num { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(–muted); flex-shrink: 0; }
+.tag { font-size: 0.68rem; font-weight: 500; background: var(–tag-bg); color: var(–muted); padding: 0.18rem 0.5rem; border-radius: 4px; }
+
+/* ══════════ HOME ══════════ */
+#page-home { display: flex; align-items: center; padding: 0 5%; }
+.hero-inner { max-width: 820px; padding: 2rem 0; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(–accent); background: var(–accent-light); padding: 0.28rem 0.7rem; border-radius: 99px; margin-bottom: 1.75rem; }
+.hero-eyebrow::before { content:’’; display:block; width:6px; height:6px; border-radius:50%; background:var(–accent); }
+.hero h1 { font-family: ‘DM Serif Display’, serif; font-size: clamp(2.6rem, 7vw, 5.2rem); line-height: 1.06; letter-spacing: -0.03em; margin-bottom: 1.25rem; }
+.hero h1 em { font-style: italic; color: var(–accent); }
+.hero-sub { font-size: 1rem; color: var(–muted); max-width: 460px; line-height: 1.75; margin-bottom: 2rem; }
+.hero-cta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 3rem; }
+.home-cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem; max-width: 820px; }
+.home-card { background: var(–surface); border: 1px solid var(–border); border-radius: 10px; padding: 1.1rem 1.25rem; cursor: pointer; transition: all 0.2s; }
+.home-card:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.07); border-color: var(–accent); }
+.hc-num { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(–muted); margin-bottom: 0.4rem; }
+.hc-title { font-family: ‘DM Serif Display’, serif; font-size: 1rem; }
+.hc-arrow { font-size: 0.75rem; color: var(–muted); margin-top: 0.6rem; }
+
+/* ══════════ ABOUT ══════════ */
+#page-about { padding: 0 5% 5rem; }
+.about-page-inner { max-width: 980px; margin: 0 auto; padding-top: 3.5rem; }
+.about-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+.about-bio h2 { font-family: ‘DM Serif Display’, serif; font-size: clamp(1.4rem, 3vw, 2rem); letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 1.25rem; }
+.about-bio p { color: var(–muted); line-height: 1.9; margin-bottom: 1.1rem; font-size: 0.95rem; }
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin-bottom: 2.25rem; }
+.stat-card { background: var(–surface); border: 1px solid var(–border); border-radius: 10px; padding: 1.25rem; }
+.stat-val { font-family: ‘DM Serif Display’, serif; font-size: 1.75rem; color: var(–accent); letter-spacing: -0.03em; }
+.stat-lbl { font-size: 0.75rem; color: var(–muted); margin-top: 0.2rem; }
+.timeline { border-left: 2px solid var(–border); padding-left: 1.4rem; }
+.tl-item { position: relative; margin-bottom: 1.6rem; }
+.tl-item::before { content:’’; position:absolute; left:-1.82rem; top:0.35rem; width:8px; height:8px; border-radius:50%; background:var(–accent); border:2px solid var(–bg); }
+.tl-year { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(–accent); margin-bottom: 0.15rem; }
+.tl-title { font-weight: 500; font-size: 0.875rem; }
+.tl-desc { font-size: 0.82rem; color: var(–muted); margin-top: 0.15rem; line-height: 1.55; }
+
+/* ══════════ PROJECTS ══════════ */
+#page-projects { padding: 0 5% 5rem; }
+.projects-page-inner { max-width: 1020px; margin: 0 auto; padding-top: 3.5rem; }
+.project-row { display: grid; grid-template-columns: 56px 1fr auto; align-items: center; gap: 1.75rem; padding: 1.5rem 0.75rem; border-bottom: 1px solid var(–border); border-radius: 8px; transition: background 0.15s, padding 0.15s; }
+.project-row:first-child { border-top: 1px solid var(–border); }
+.project-row:hover { background: var(–surface); padding-left: 1.25rem; }
+.pr-icon { width: 52px; height: 52px; border-radius: 12px; background: var(–accent-light); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
+.pr-title { font-family: ‘DM Serif Display’, serif; font-size: 1.35rem; letter-spacing: -0.02em; margin-bottom: 0.3rem; }
+.pr-desc { font-size: 0.84rem; color: var(–muted); line-height: 1.6; max-width: 540px; }
+.pr-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.6rem; }
+.pr-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; flex-shrink: 0; }
+.pr-featured { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(–accent); background: var(–accent-light); padding: 0.18rem 0.45rem; border-radius: 4px; }
+.pr-link { font-size: 0.78rem; color: var(–accent); text-decoration: none; font-weight: 500; white-space: nowrap; }
+.pr-link:hover { text-decoration: underline; }
+
+/* ══════════ EXPERIENCES ══════════ */
+#page-experiences { padding: 0 5% 5rem; }
+.exp-page-inner { max-width: 980px; margin: 0 auto; padding-top: 3.5rem; }
+
+.exp-categories { display: flex; flex-direction: column; gap: 3.5rem; }
+.exp-cat-label {
+font-size: 0.7rem; font-weight: 500; letter-spacing: 0.12em;
+text-transform: uppercase; color: var(–muted);
+display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;
+}
+.exp-cat-label::after { content:’’; flex:1; height:1px; background:var(–border); }
+
+.exp-card {
+background: var(–surface); border: 1px solid var(–border);
+border-radius: 12px; padding: 1.75rem 2rem;
+margin-bottom: 1rem; transition: box-shadow 0.2s;
+}
+.exp-card:hover { box-shadow: 0 6px 28px rgba(0,0,0,0.06); }
+.exp-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+.exp-title { font-family: ‘DM Serif Display’, serif; font-size: 1.25rem; letter-spacing: -0.01em; }
+.exp-badge {
+font-size: 0.65rem; font-weight: 500; letter-spacing: 0.08em;
+text-transform: uppercase; color: var(–accent); background: var(–accent-light);
+padding: 0.22rem 0.55rem; border-radius: 4px; white-space: nowrap; flex-shrink: 0;
+}
+.exp-org { font-size: 0.8rem; color: var(–muted); margin-bottom: 0.85rem; font-weight: 400; }
+.exp-bullets { padding-left: 1.1rem; }
+.exp-bullets li { font-size: 0.875rem; color: var(–muted); line-height: 1.7; margin-bottom: 0.3rem; }
+.exp-bullets li::marker { color: var(–accent); }
+.exp-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 1rem; }
+
+.achievements-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.ach-card { background: var(–surface); border: 1px solid var(–border); border-radius: 10px; padding: 1.25rem 1.5rem; }
+.ach-icon { font-size: 1.4rem; margin-bottom: 0.6rem; }
+.ach-title { font-weight: 500; font-size: 0.9rem; margin-bottom: 0.2rem; }
+.ach-sub { font-size: 0.78rem; color: var(–muted); }
+
+.exploring-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+.exp-explore-item { background: var(–surface); border: 1px solid var(–border); border-radius: 8px; padding: 1rem 1.25rem; font-size: 0.875rem; color: var(–muted); display: flex; align-items: center; gap: 0.6rem; }
+.exp-explore-item::before { content:‘→’; color: var(–accent); font-size: 0.8rem; flex-shrink:0; }
+
+/* ══════════ SKILLS ══════════ */
+#page-skills { padding: 0 5% 5rem; }
+.skills-page-inner { max-width: 880px; margin: 0 auto; padding-top: 3.5rem; }
+.skills-categories { display: flex; flex-direction: column; gap: 3rem; }
+.scb-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
+.scb-title { font-family: ‘DM Serif Display’, serif; font-size: 1.6rem; letter-spacing: -0.02em; }
+.scb-line { flex: 1; height: 1px; background: var(–border); }
+.scb-pills { display: flex; flex-wrap: wrap; gap: 0.65rem; }
+.skill-pill { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.55rem 1rem; background: var(–surface); border: 1px solid var(–border); border-radius: 99px; font-size: 0.84rem; color: var(–text); transition: all 0.2s; }
+.skill-pill:hover { border-color: var(–accent); background: var(–accent-light); }
+.dot { width: 7px; height: 7px; border-radius: 50%; }
+.dot-green { background: #4caf7d; }
+.dot-blue  { background: #5e8ac8; }
+.dot-orange{ background: #e07b39; }
+
+/* ══════════ CONTACT ══════════ */
+#page-contact { display: flex; align-items: center; justify-content: center; padding: 2rem 5%; min-height: 100vh; }
+.contact-page-inner { max-width: 660px; width: 100%; }
+.contact-big { font-family: ‘DM Serif Display’, serif; font-size: clamp(1.6rem, 4vw, 2.6rem); letter-spacing: -0.02em; line-height: 1.3; margin-bottom: 1.75rem; }
+.contact-big em { font-style: italic; color: var(–accent); }
+.contact-bio-text { color: var(–muted); line-height: 1.8; margin-bottom: 2.25rem; font-size: 0.95rem; }
+.contact-actions { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-bottom: 2.5rem; }
+.contact-divider { height: 1px; background: var(–border); margin-bottom: 1.25rem; }
+.contact-footer-row { font-size: 0.78rem; color: var(–muted); }
+
+/* ══════════ EDITOR ══════════ */
+#editor-overlay { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); }
+#editor-overlay.open { display: block; }
+#editor-panel { position: fixed; top: 0; right: -520px; width: 500px; max-width: 100vw; height: 100vh; background: #fff; z-index: 1000; box-shadow: -8px 0 40px rgba(0,0,0,0.12); display: flex; flex-direction: column; transition: right 0.35s cubic-bezier(0.4,0,0.2,1); font-family: ‘DM Sans’, sans-serif; }
+#editor-panel.open { right: 0; }
+.ep-header { padding: 1.1rem 1.5rem; border-bottom: 1px solid var(–border); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+.ep-header h3 { font-family: ‘DM Serif Display’, serif; font-size: 1.15rem; }
+.ep-close { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(–muted); }
+.ep-tabs { display: flex; border-bottom: 1px solid var(–border); flex-shrink: 0; overflow-x: auto; }
+.ep-tab { padding: 0.7rem 0.9rem; font-size: 0.75rem; font-weight: 500; border: none; background: none; cursor: pointer; color: var(–muted); border-bottom: 2px solid transparent; white-space: nowrap; font-family: ‘DM Sans’, sans-serif; transition: all 0.15s; }
+.ep-tab.active { color: var(–accent); border-bottom-color: var(–accent); }
+.ep-body { flex: 1; overflow-y: auto; padding: 1.25rem; }
+.ep-section { display: none; }
+.ep-section.active { display: block; }
+.ep-field { margin-bottom: 1.1rem; }
+.ep-field label { display: block; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(–muted); margin-bottom: 0.35rem; }
+.ep-field input, .ep-field textarea { width: 100%; padding: 0.55rem 0.7rem; border: 1px solid var(–border); border-radius: 6px; font-family: ‘DM Sans’, sans-serif; font-size: 0.85rem; color: var(–text); background: var(–bg); transition: border-color 0.15s; resize: vertical; }
+.ep-field input:focus, .ep-field textarea:focus { outline: none; border-color: var(–accent); }
+.ep-divider { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(–muted); margin: 1.25rem 0 0.85rem; padding-bottom: 0.35rem; border-bottom: 1px solid var(–border); }
+.ep-footer { padding: 1rem 1.25rem; border-top: 1px solid var(–border); display: flex; flex-direction: column; gap: 0.65rem; flex-shrink: 0; }
+.ep-token-row input { width: 100%; padding: 0.5rem 0.7rem; border: 1px solid var(–border); border-radius: 6px; font-size: 0.8rem; font-family: ‘DM Sans’, sans-serif; }
+.ep-save { background: var(–accent); color: #fff; border: none; padding: 0.7rem; border-radius: 6px; font-size: 0.875rem; font-weight: 500; cursor: pointer; font-family: ‘DM Sans’, sans-serif; transition: background 0.2s; }
+.ep-save:hover { background: #0f2418; }
+.ep-save:disabled { background: var(–muted); cursor: not-allowed; }
+.ep-status { font-size: 0.78rem; text-align: center; min-height: 1.1em; }
+.ep-status.ok { color: #4caf7d; }
+.ep-status.err { color: #e05e5e; }
+.skill-editor-row { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center; }
+.skill-editor-row input { flex: 1; padding: 0.42rem 0.55rem; border: 1px solid var(–border); border-radius: 5px; font-size: 0.8rem; font-family: ‘DM Sans’, sans-serif; }
+.skill-del { background: none; border: none; cursor: pointer; color: #e05e5e; font-size: 1rem; padding: 0 0.3rem; }
+.add-skill-btn { font-size: 0.75rem; background: var(–accent-light); color: var(–accent); border: none; padding: 0.38rem 0.75rem; border-radius: 5px; cursor: pointer; font-weight: 500; font-family: ‘DM Sans’, sans-serif; margin-top: 0.25rem; }
+.proj-block { background: var(–bg); border: 1px solid var(–border); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+
+/* ══════════ MOBILE ══════════ */
+@media (max-width: 768px) {
+:root { –nav-h: 58px; }
+.nav-links { display: none; }
+.hamburger { display: flex; }
+
+/* home */
+.home-cards { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+.hero h1 { font-size: clamp(2.2rem, 10vw, 3rem); }
+
+/* about */
+.about-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+
+/* projects */
+.project-row { grid-template-columns: 44px 1fr; gap: 1rem; }
+.pr-right { display: none; }
+.pr-title { font-size: 1.1rem; }
+
+/* experiences */
+.achievements-row { grid-template-columns: 1fr; }
+.exploring-grid { grid-template-columns: 1fr; }
+.exp-card { padding: 1.25rem 1.25rem; }
+
+/* contact */
+#page-contact { align-items: flex-start; padding-top: 2rem; }
+
+/* page padding */
+#page-about, #page-projects, #page-experiences, #page-skills { padding: 0 4% 4rem; }
+.about-page-inner, .projects-page-inner, .exp-page-inner, .skills-page-inner { padding-top: 2.5rem; }
+.page-header { margin-bottom: 2rem; }
+}
+
+@media (max-width: 480px) {
+.home-cards { grid-template-columns: repeat(2, 1fr); }
+.stats-grid { grid-template-columns: 1fr 1fr; }
+.hero-cta { flex-direction: column; }
+.btn { width: 100%; justify-content: center; }
+.contact-actions { flex-direction: column; }
+}
+</style>
+
 </head>
 <body>
-    <!-- NAV -->
-    <nav aria-label="Main Navigation">
-        <span class="nav-logo" onclick="navigate('home')">Giri.</span>
-        <ul class="nav-links" role="menubar">
-            <li><a onclick="navigate('about')" id="nav-about" aria-current="page">About</a></li>
-            <li><a onclick="navigate('projects')" id="nav-projects">Projects</a></li>
-            <li><a onclick="navigate('experiences')" id="nav-experiences">Experience</a></li>
-            <li><a onclick="navigate('skills')" id="nav-skills">Skills</a></li>
-            <li><a onclick="navigate('contact')" id="nav-contact">Contact</a></li>
-        </ul>
-        <button class="hamburger" id="hamburger" onclick="toggleMenu();" aria-label="Toggle menu">
-            <span></span><span></span><span></span>
-        </button>
-    </nav>
-    
-    <!-- MOBILE MENU -->
 
-    <div id="mobile-menu">
-        <a onclick="navigate('about')">About</a>
+<!-- NAV -->
+
+<nav>
+  <span class="nav-logo" onclick="navigate('home')">Giri.</span>
+  <ul class="nav-links">
+    <li><a onclick="navigate('about')" id="nav-about">About</a></li>
+    <li><a onclick="navigate('projects')" id="nav-projects">Projects</a></li>
+    <li><a onclick="navigate('experiences')" id="nav-experiences">Experience</a></li>
+    <li><a onclick="navigate('skills')" id="nav-skills">Skills</a></li>
+    <li><a onclick="navigate('contact')" id="nav-contact">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+
+<div class="mobile-menu" id="mobile-menu">
+  <a onclick="navigate('about');closeMenu()">About</a>
+  <a onclick="navigate('projects');closeMenu()">Projects</a>
+  <a onclick="navigate('experiences');closeMenu()">Experience</a>
+  <a onclick="navigate('skills');closeMenu()">Skills</a>
+  <a onclick="navigate('contact');closeMenu()">Contact</a>
+</div>
+
+<div id="app">
+
+  <!-- HOME -->
+
+  <div class="page active" id="page-home">
+    <section class="hero" style="min-height:calc(100vh - var(--nav-h)); display:flex; align-items:center; padding:0 5%;">
+      <div class="hero-inner">
+        <div class="hero-eyebrow" id="hero-eyebrow">Cybersecurity · Software · Builder</div>
+        <h1 id="hero-h1">Hi, I'm Giri.<br/><em>I break things</em><br/>to understand them.</h1>
+        <p class="hero-sub" id="hero-sub">High school student passionate about cybersecurity, software development, and building tools that actually matter. Currently exploring offensive security, CTFs, and AI-powered applications.</p>
+        <div class="hero-cta">
+          <button class="btn btn-primary" onclick="navigate('projects')">View my work ↓</button>
+          <button class="btn btn-ghost" onclick="navigate('contact')">Get in touch</button>
+        </div>
+        <div class="home-cards">
+          <div class="home-card" onclick="navigate('about')"><div class="hc-num">01</div><div class="hc-title">About</div><div class="hc-arrow">→</div></div>
+          <div class="home-card" onclick="navigate('projects')"><div class="hc-num">02</div><div class="hc-title">Projects</div><div class="hc-arrow">→</div></div>
+          <div class="home-card" onclick="navigate('experiences')"><div class="hc-num">03</div><div class="hc-title">Experience</div><div class="hc-arrow">→</div></div>
+          <div class="home-card" onclick="navigate('skills')"><div class="hc-num">04</div><div class="hc-title">Skills</div><div class="hc-arrow">→</div></div>
+          <div class="home-card" onclick="navigate('contact')"><div class="hc-num">05</div><div class="hc-title">Contact</div><div class="hc-arrow">→</div></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ABOUT -->
+
+  <div class="page" id="page-about">
+    <div class="about-page-inner">
+      <div class="page-header"><span class="page-num">01</span><h1>About</h1></div>
+      <div class="about-layout">
+        <div class="about-bio">
+          <h2 id="about-heading">Student. Builder.<br/>Security enthusiast.</h2>
+          <p id="about-p1">I'm a sophomore with a deep interest in how systems work — and how they break. From competing in CyberPatriot to building full-stack tools, I'm always pushing to learn something new at the edge of what I know.</p>
+          <p id="about-p2">When I'm not writing code or doing CTF challenges, I'm running, connecting with professionals in the cybersecurity field, or planning my next project.</p>
+        </div>
+        <div>
+          <div class="stats-grid">
+            <div class="stat-card"><div class="stat-val" id="stat1-num">Platinum</div><div class="stat-lbl" id="stat1-label">CyberPatriot rank</div></div>
+            <div class="stat-card"><div class="stat-val" id="stat2-num">10th</div><div class="stat-lbl" id="stat2-label">Grade</div></div>
+            <div class="stat-card"><div class="stat-val" id="stat3-num">Boston</div><div class="stat-lbl" id="stat3-label">Area, MA</div></div>
+            <div class="stat-card"><div class="stat-val" id="stat4-num">MIT</div><div class="stat-lbl" id="stat4-label">Blueprint alum</div></div>
+          </div>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-year">2026</div><div class="tl-title">MIT Blueprint Hackathon</div><div class="tl-desc">Built an accessibility-focused traffic light detection app, pivoting from mobile to web under time pressure.</div></div>
+            <div class="tl-item"><div class="tl-year">2025</div><div class="tl-title">CyberPatriot — Platinum, 2nd Place</div><div class="tl-desc">Competed nationally in cybersecurity defense competition.</div></div>
+            <div class="tl-item"><div class="tl-year">2025</div><div class="tl-title">Civil Air Patrol — NCO of the Quarter</div><div class="tl-desc">Earned Wright Brothers Award and completed Orientation Flight.</div></div>
+            <div class="tl-item"><div class="tl-year">2025</div><div class="tl-title">RunnerTrack</div><div class="tl-desc">Built AI-powered running form analysis app using MediaPipe, OpenCV & Streamlit.</div></div>
+          </div>
+        </div>
+      </div>
     </div>
-</body></html>
+  </div>
+
+  <!-- PROJECTS -->
+
+  <div class="page" id="page-projects">
+    <div class="projects-page-inner">
+      <div class="page-header"><span class="page-num">02</span><h1>Projects</h1></div>
+      <div id="projects-list"></div>
+    </div>
+  </div>
+
+  <!-- EXPERIENCES -->
+
+  <div class="page" id="page-experiences">
+    <div class="exp-page-inner">
+      <div class="page-header"><span class="page-num">03</span><h1>Experience</h1></div>
+      <div class="exp-categories">
+
+```
+    <!-- Tech & CS -->
+    <div>
+      <div class="exp-cat-label">Tech & CS</div>
+      <div class="exp-card">
+        <div class="exp-card-top">
+          <div class="exp-title">MIT Blueprint Hackathon</div>
+          <span class="exp-badge">⭐ Top Experience</span>
+        </div>
+        <div class="exp-org">MIT · 2026</div>
+        <ul class="exp-bullets">
+          <li>Selected to attend MIT Blueprint, a competitive high school tech program</li>
+          <li>Built an accessibility-focused traffic light detection app for colorblind users</li>
+          <li>Collaborated with a mixed hardware/software team under time constraints</li>
+          <li>Pivoted from mobile (Expo) to web mid-hackathon — shipped anyway</li>
+          <li>Networked with MIT students, faculty, and peers in tech</li>
+        </ul>
+        <div class="exp-tags"><span class="tag">JavaScript</span><span class="tag">Computer Vision</span><span class="tag">Hackathon</span><span class="tag">Accessibility</span></div>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-card-top">
+          <div class="exp-title">CyberPatriot Competitor</div>
+          <span class="exp-badge">Platinum · 2nd Place</span>
+        </div>
+        <div class="exp-org">CyberPatriot · 2025</div>
+        <ul class="exp-bullets">
+          <li>Achieved Platinum tier — top division in national competition</li>
+          <li>Finished 2nd place in division</li>
+          <li>Defended Linux and Windows systems against simulated cyberattacks</li>
+          <li>Attended CyberPatriot training camp</li>
+        </ul>
+        <div class="exp-tags"><span class="tag">Linux</span><span class="tag">Windows</span><span class="tag">Network Defense</span><span class="tag">Cybersecurity</span></div>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-card-top">
+          <div class="exp-title">AI Running Analysis (RunnerTrack)</div>
+          <span class="exp-badge">In Progress</span>
+        </div>
+        <div class="exp-org">Personal Project · 2025</div>
+        <ul class="exp-bullets">
+          <li>Designing an AI-based system to analyze running form using video input</li>
+          <li>Built with MediaPipe, OpenCV, Streamlit, and a local Ollama LLM</li>
+          <li>Exploring computer vision and performance optimization independently</li>
+        </ul>
+        <div class="exp-tags"><span class="tag">Python</span><span class="tag">MediaPipe</span><span class="tag">OpenCV</span><span class="tag">AI/ML</span></div>
+      </div>
+    </div>
+
+    <!-- Leadership -->
+    <div>
+      <div class="exp-cat-label">Leadership & Service</div>
+      <div class="exp-card">
+        <div class="exp-card-top">
+          <div class="exp-title">Civil Air Patrol</div>
+          <span class="exp-badge">Cadet NCO</span>
+        </div>
+        <div class="exp-org">Civil Air Patrol · 2024–Present</div>
+        <ul class="exp-bullets">
+          <li>Earned Cadet NCO of the Quarter (2025)</li>
+          <li>Received Wright Brothers Award — milestone achievement in CAP progression</li>
+          <li>Completed Orientation Flight</li>
+          <li>Developed leadership and discipline skills in a structured military environment</li>
+        </ul>
+        <div class="exp-tags"><span class="tag">Leadership</span><span class="tag">STEM</span><span class="tag">Aerospace</span></div>
+      </div>
+    </div>
+
+    <!-- Academic -->
+    <div>
+      <div class="exp-cat-label">Academic & Enrichment</div>
+      <div class="exp-card">
+        <div class="exp-card-top">
+          <div class="exp-title">Academic Decathlon</div>
+          <span class="exp-badge">Regional Champion Team</span>
+        </div>
+        <div class="exp-org">Academic Decathlon · 2025</div>
+        <ul class="exp-bullets">
+          <li>Member of 1st place regional championship team</li>
+          <li>Competed across multiple academic disciplines under timed conditions</li>
+          <li>Demonstrated interdisciplinary knowledge and competitive prep</li>
+        </ul>
+        <div class="exp-tags"><span class="tag">Competition</span><span class="tag">Academics</span></div>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-card-top">
+          <div class="exp-title">Geothermal WBLA Internship</div>
+          <span class="exp-badge">Internship</span>
+        </div>
+        <div class="exp-org">WBLA · 2025</div>
+        <ul class="exp-bullets">
+          <li>Participated in real-world geothermal and energy-related work experience</li>
+          <li>Gained exposure to sustainability and engineering applications</li>
+          <li>Collaborated with peers and professionals in a professional setting</li>
+        </ul>
+        <div class="exp-tags"><span class="tag">Engineering</span><span class="tag">Sustainability</span><span class="tag">Real-World</span></div>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-card-top">
+          <div class="exp-title">Track & Field</div>
+          <span class="exp-badge">Indoor + Outdoor</span>
+        </div>
+        <div class="exp-org">High School Varsity · 2024–Present</div>
+        <ul class="exp-bullets">
+          <li>Competes in 600m and mile events (mid-distance)</li>
+          <li>Balances competitive athletics with a rigorous academic schedule</li>
+        </ul>
+        <div class="exp-tags"><span class="tag">Athletics</span><span class="tag">Mid-Distance</span></div>
+      </div>
+    </div>
+
+    <!-- What I'm Exploring -->
+    <div>
+      <div class="exp-cat-label">What I'm Exploring</div>
+      <div class="exploring-grid">
+        <div class="exp-explore-item">Cybersecurity & offensive security</div>
+        <div class="exp-explore-item">AI + Computer Vision</div>
+        <div class="exp-explore-item">Building tools that solve real problems</div>
+        <div class="exp-explore-item">Hackathons & high-intensity environments</div>
+        <div class="exp-explore-item">Shadowing Prof. Raghuraman at MIT <span style="font-size:0.7rem;color:var(--accent);margin-left:0.4rem;">upcoming</span></div>
+        <div class="exp-explore-item">Starting a CyberPatriot club at school <span style="font-size:0.7rem;color:var(--accent);margin-left:0.4rem;">planned</span></div>
+      </div>
+    </div>
+
+    <!-- Achievements -->
+    <div>
+      <div class="exp-cat-label">Achievements</div>
+      <div class="achievements-row">
+        <div class="ach-card"><div class="ach-icon">🏆</div><div class="ach-title">CyberPatriot Platinum · 2nd Place</div><div class="ach-sub">National cybersecurity competition · 2025</div></div>
+        <div class="ach-card"><div class="ach-icon">🎖️</div><div class="ach-title">Cadet NCO of the Quarter</div><div class="ach-sub">Civil Air Patrol · 2025</div></div>
+        <div class="ach-card"><div class="ach-icon">✈️</div><div class="ach-title">Wright Brothers Award</div><div class="ach-sub">Civil Air Patrol milestone achievement</div></div>
+        <div class="ach-card"><div class="ach-icon">🥇</div><div class="ach-title">Regional Champion Team</div><div class="ach-sub">Academic Decathlon · 2025</div></div>
+        <div class="ach-card"><div class="ach-icon">🤖</div><div class="ach-title">FLL Teamwork Award</div><div class="ach-sub">FIRST Lego League robotics</div></div>
+        <div class="ach-card"><div class="ach-icon">🎓</div><div class="ach-title">MIT Blueprint — Accepted</div><div class="ach-sub">Competitive high school tech program · 2026</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- SKILLS -->
+
+  <div class="page" id="page-skills">
+    <div class="skills-page-inner">
+      <div class="page-header"><span class="page-num">04</span><h1>Skills & Tools</h1></div>
+      <div class="skills-categories" id="skills-display"></div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+
+  <div class="page" id="page-contact">
+    <div class="contact-page-inner">
+      <div class="page-header"><span class="page-num">05</span><h1>Contact</h1></div>
+      <p class="contact-big">Got a project, opportunity,<br/>or just want to <em>connect?</em></p>
+      <p class="contact-bio-text" id="contact-bio">I'm always open to conversations with professionals in cybersecurity, research opportunities, or just talking about cool projects. Feel free to reach out.</p>
+      <div class="contact-actions">
+        <a id="contact-email-link" href="mailto:your@email.com" class="btn btn-primary">Email me →</a>
+        <a id="contact-github-link" href="https://github.com/itsgiridabest" target="_blank" class="btn btn-ghost">GitHub</a>
+        <a id="contact-linkedin-link" href="https://linkedin.com/in/" target="_blank" class="btn btn-ghost">LinkedIn</a>
+      </div>
+      <div class="contact-divider"></div>
+      <div class="contact-footer-row"><span id="footer-left">© 2026 Giri. All rights reserved.</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- EDITOR -->
+
+<div id="editor-overlay" onclick="closeEditor()"></div>
+<div id="editor-panel">
+  <div class="ep-header"><h3>Edit Portfolio</h3><button class="ep-close" onclick="closeEditor()">×</button></div>
+  <div class="ep-tabs">
+    <button class="ep-tab active" onclick="switchTab(event,'hero')">Hero</button>
+    <button class="ep-tab" onclick="switchTab(event,'about')">About</button>
+    <button class="ep-tab" onclick="switchTab(event,'projects')">Projects</button>
+    <button class="ep-tab" onclick="switchTab(event,'skills')">Skills</button>
+    <button class="ep-tab" onclick="switchTab(event,'contact')">Contact</button>
+  </div>
+  <div class="ep-body">
+    <div class="ep-section active" id="tab-hero">
+      <div class="ep-field"><label>Eyebrow text</label><input id="e-eyebrow" type="text"/></div>
+      <div class="ep-field"><label>Heading line 1</label><input id="e-h1-l1" type="text"/></div>
+      <div class="ep-field"><label>Heading line 2 (italic)</label><input id="e-h1-l2" type="text"/></div>
+      <div class="ep-field"><label>Heading line 3</label><input id="e-h1-l3" type="text"/></div>
+      <div class="ep-field"><label>Subheading</label><textarea id="e-sub" rows="3"></textarea></div>
+    </div>
+    <div class="ep-section" id="tab-about">
+      <div class="ep-field"><label>Section heading</label><textarea id="e-about-h" rows="2"></textarea></div>
+      <div class="ep-field"><label>Paragraph 1</label><textarea id="e-about-p1" rows="4"></textarea></div>
+      <div class="ep-field"><label>Paragraph 2</label><textarea id="e-about-p2" rows="4"></textarea></div>
+      <div class="ep-divider">Stats</div>
+      <div class="ep-field"><label>Stat 1 value</label><input id="e-s1n"/></div><div class="ep-field"><label>Stat 1 label</label><input id="e-s1l"/></div>
+      <div class="ep-field"><label>Stat 2 value</label><input id="e-s2n"/></div><div class="ep-field"><label>Stat 2 label</label><input id="e-s2l"/></div>
+      <div class="ep-field"><label>Stat 3 value</label><input id="e-s3n"/></div><div class="ep-field"><label>Stat 3 label</label><input id="e-s3l"/></div>
+      <div class="ep-field"><label>Stat 4 value</label><input id="e-s4n"/></div><div class="ep-field"><label>Stat 4 label</label><input id="e-s4l"/></div>
+    </div>
+    <div class="ep-section" id="tab-projects"><div id="projects-editor"></div></div>
+    <div class="ep-section" id="tab-skills">
+      <div class="ep-divider">Cybersecurity</div><div id="skills-cyber-editor"></div><button class="add-skill-btn" onclick="addSkill('cyber')">+ Add skill</button>
+      <div class="ep-divider" style="margin-top:1.25rem">Development</div><div id="skills-dev-editor"></div><button class="add-skill-btn" onclick="addSkill('dev')">+ Add skill</button>
+      <div class="ep-divider" style="margin-top:1.25rem">Tools & Platforms</div><div id="skills-tools-editor"></div><button class="add-skill-btn" onclick="addSkill('tools')">+ Add skill</button>
+    </div>
+    <div class="ep-section" id="tab-contact">
+      <div class="ep-field"><label>Bio text</label><textarea id="e-contact-bio" rows="4"></textarea></div>
+      <div class="ep-field"><label>Email address</label><input id="e-email" type="email"/></div>
+      <div class="ep-field"><label>GitHub URL</label><input id="e-github" type="url"/></div>
+      <div class="ep-field"><label>LinkedIn URL</label><input id="e-linkedin" type="url"/></div>
+      <div class="ep-field"><label>Footer text</label><input id="e-footer-l"/></div>
+    </div>
+  </div>
+  <div class="ep-footer">
+    <div class="ep-token-row"><input type="password" id="gh-token" placeholder="GitHub PAT (ghp_...)"/></div>
+    <button class="ep-save" onclick="saveAndCommit()">Save & Publish to GitHub</button>
+    <div class="ep-status" id="ep-status"></div>
+  </div>
+</div>
+
+<script>
+const GITHUB_USER = 'itsgiridabest';
+const GITHUB_REPO = 'itsgiridabest.github.io';
+const GITHUB_FILE = 'index.html';
+let currentPage = 'home';
+
+let projects = [
+  { icon:'🏃', title:'RunnerTrack', desc:'A real-time running form analysis app using computer vision. Detects posture, stride, and form issues using MediaPipe pose estimation, displayed in an interactive Streamlit dashboard.', tags:['Python','MediaPipe','OpenCV','Streamlit','Ollama LLM'], link:'#', featured:true },
+  { icon:'🚦', title:'Traffic Light Detector', desc:'Accessibility-focused app built at MIT Blueprint to detect traffic light colors for colorblind users. Pivoted from mobile to web under hackathon time pressure.', tags:['JavaScript','Computer Vision','Accessibility','Hackathon'], link:'#', featured:false },
+  { icon:'🛡️', title:'CTF Writeups', desc:'Documented solutions and methodology notes from picoCTF and other competitions. Covers web exploitation, reverse engineering, cryptography, and binary challenges.', tags:['picoCTF','Web Exploit','Crypto','Rev Eng'], link:'#', featured:false },
+  { icon:'🔧', title:'Tampermonkey Scripts', desc:'Custom browser automation and enhancement scripts written in JavaScript. Demonstrates practical scripting, DOM manipulation, and browser extension development.', tags:['JavaScript','Tampermonkey','Browser APIs'], link:'#', featured:false },
+];
+
+let skills = {
+  cyber: ['Network Defense','CTF / Capture the Flag','Linux Hardening','CyberPatriot','Bug Bounty (learning)','Kali Linux'],
+  dev:   ['Python','JavaScript','OpenCV','Streamlit','Git / GitHub','MediaPipe'],
+  tools: ['VS Code','Ollama (Local LLMs)','Wireshark','Burp Suite (learning)','Expo / React Native'],
+};
+
+// ── Mobile menu ──
+function toggleMenu() {
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobile-menu').classList.remove('open');
+}
+
+// ── Navigation ──
+function navigate(page) {
+  if (page === currentPage) return;
+  const cur = document.getElementById('page-' + currentPage);
+  const nxt = document.getElementById('page-' + page);
+  cur.classList.add('exit');
+  setTimeout(() => cur.classList.remove('active','exit'), 360);
+  setTimeout(() => { nxt.classList.add('active'); nxt.scrollTop = 0; }, 190);
+  currentPage = page;
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const navEl = document.getElementById('nav-' + page);
+  if (navEl) navEl.classList.add('active');
+  if (page === 'projects') renderProjects();
+  if (page === 'skills') renderSkills();
+}
+
+function renderProjects() {
+  document.getElementById('projects-list').innerHTML = projects.map(p => `
+    <div class="project-row">
+      <div class="pr-icon">${p.icon}</div>
+      <div>
+        <div class="pr-title">${p.title}</div>
+        <div class="pr-desc">${p.desc}</div>
+        <div class="pr-tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      </div>
+      <div class="pr-right">
+        ${p.featured ? '<span class="pr-featured">Featured</span>' : ''}
+        <a href="${p.link}" class="pr-link">View →</a>
+      </div>
+    </div>`).join('');
+}
+
+function renderSkills() {
+  const cats = [
+    {key:'cyber',label:'Cybersecurity',dot:'dot-green'},
+    {key:'dev',label:'Development',dot:'dot-blue'},
+    {key:'tools',label:'Tools & Platforms',dot:'dot-orange'}
+  ];
+  document.getElementById('skills-display').innerHTML = cats.map(c=>`
+    <div>
+      <div class="scb-header"><div class="scb-title">${c.label}</div><div class="scb-line"></div></div>
+      <div class="scb-pills">${skills[c.key].map(s=>`<span class="skill-pill"><span class="dot ${c.dot}"></span>${s}</span>`).join('')}</div>
+    </div>`).join('');
+}
+
+// ── Editor ──
+function openEditor() { loadEditorFields(); document.getElementById('editor-overlay').classList.add('open'); document.getElementById('editor-panel').classList.add('open'); }
+function closeEditor() { document.getElementById('editor-overlay').classList.remove('open'); document.getElementById('editor-panel').classList.remove('open'); }
+function switchTab(e, name) {
+  document.querySelectorAll('.ep-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.ep-section').forEach(s=>s.classList.remove('active'));
+  e.target.classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+}
+function loadEditorFields() {
+  const lines = document.getElementById('hero-h1').innerText.split('\n').map(s=>s.trim()).filter(Boolean);
+  document.getElementById('e-eyebrow').value = document.getElementById('hero-eyebrow').innerText;
+  document.getElementById('e-h1-l1').value = lines[0]||'';
+  document.getElementById('e-h1-l2').value = lines[1]||'';
+  document.getElementById('e-h1-l3').value = lines[2]||'';
+  document.getElementById('e-sub').value = document.getElementById('hero-sub').innerText;
+  document.getElementById('e-about-h').value = document.getElementById('about-heading').innerText;
+  document.getElementById('e-about-p1').value = document.getElementById('about-p1').innerText;
+  document.getElementById('e-about-p2').value = document.getElementById('about-p2').innerText;
+  ['1','2','3','4'].forEach(n=>{
+    document.getElementById('e-s'+n+'n').value = document.getElementById('stat'+n+'-num').innerText;
+    document.getElementById('e-s'+n+'l').value = document.getElementById('stat'+n+'-label').innerText;
+  });
+  document.getElementById('e-contact-bio').value = document.getElementById('contact-bio').innerText;
+  document.getElementById('e-email').value = document.getElementById('contact-email-link').href.replace('mailto:','');
+  document.getElementById('e-github').value = document.getElementById('contact-github-link').href;
+  document.getElementById('e-linkedin').value = document.getElementById('contact-linkedin-link').href;
+  document.getElementById('e-footer-l').value = document.getElementById('footer-left').innerText;
+  renderProjectsEditor(); renderSkillsEditor('cyber'); renderSkillsEditor('dev'); renderSkillsEditor('tools');
+}
+function renderProjectsEditor() {
+  const c = document.getElementById('projects-editor'); c.innerHTML='';
+  projects.forEach((p,i) => {
+    const d = document.createElement('div'); d.className='proj-block';
+    d.innerHTML=`<div class="ep-field"><label>Icon</label><input value="${p.icon}" oninput="projects[${i}].icon=this.value"/></div><div class="ep-field"><label>Title</label><input value="${p.title}" oninput="projects[${i}].title=this.value"/></div><div class="ep-field"><label>Description</label><textarea rows="3" oninput="projects[${i}].desc=this.value">${p.desc}</textarea></div><div class="ep-field"><label>Tags (comma separated)</label><input value="${p.tags.join(', ')}" oninput="projects[${i}].tags=this.value.split(',').map(t=>t.trim()).filter(Boolean)"/></div><div class="ep-field"><label>Link URL</label><input value="${p.link}" oninput="projects[${i}].link=this.value"/></div><div class="ep-field"><label><input type="checkbox" ${p.featured?'checked':''} onchange="projects[${i}].featured=this.checked"/> Featured</label></div><button style="font-size:0.75rem;color:#e05e5e;background:none;border:none;cursor:pointer;" onclick="removeProject(${i})">Remove</button>`;
+
+```
+c.appendChild(d);
+```
+
+});
+const btn = document.createElement(‘button’); btn.className=‘add-skill-btn’; btn.style.marginTop=‘0.5rem’; btn.innerText=’+ Add project’;
+btn.onclick=()=>{ projects.push({icon:‘🔹’,title:‘New Project’,desc:‘Description.’,tags:[‘Tag’],link:’#’,featured:false}); renderProjectsEditor(); };
+c.appendChild(btn);
+}
+function removeProject(i) { projects.splice(i,1); renderProjectsEditor(); }
+function renderSkillsEditor(cat) {
+const c = document.getElementById(‘skills-’+cat+’-editor’); c.innerHTML=’’;
+skills[cat].forEach((s,i)=>{ const r=document.createElement(‘div’); r.className=‘skill-editor-row’; r.innerHTML=`<input value="${s}" oninput="skills['${cat}'][${i}]=this.value"/><button class="skill-del" onclick="removeSkill('${cat}',${i})">×</button>`; c.appendChild(r); });
+}
+function addSkill(cat) { skills[cat].push(‘New skill’); renderSkillsEditor(cat); }
+function removeSkill(cat,i) { skills[cat].splice(i,1); renderSkillsEditor(cat); }
+
+function applyEdits() {
+document.getElementById(‘hero-eyebrow’).innerText = document.getElementById(‘e-eyebrow’).value;
+const l1=document.getElementById(‘e-h1-l1’).value, l2=document.getElementById(‘e-h1-l2’).value, l3=document.getElementById(‘e-h1-l3’).value;
+document.getElementById(‘hero-h1’).innerHTML=`${l1}<br/><em>${l2}</em><br/>${l3}`;
+document.getElementById(‘hero-sub’).innerText=document.getElementById(‘e-sub’).value;
+document.getElementById(‘about-heading’).innerHTML=document.getElementById(‘e-about-h’).value.replace(’\n’,’<br/>’);
+document.getElementById(‘about-p1’).innerText=document.getElementById(‘e-about-p1’).value;
+document.getElementById(‘about-p2’).innerText=document.getElementById(‘e-about-p2’).value;
+[‘1’,‘2’,‘3’,‘4’].forEach(n=>{ document.getElementById(‘stat’+n+’-num’).innerText=document.getElementById(‘e-s’+n+‘n’).value; document.getElementById(‘stat’+n+’-label’).innerText=document.getElementById(‘e-s’+n+‘l’).value; });
+document.getElementById(‘contact-bio’).innerText=document.getElementById(‘e-contact-bio’).value;
+document.getElementById(‘contact-email-link’).href=‘mailto:’+document.getElementById(‘e-email’).value;
+document.getElementById(‘contact-github-link’).href=document.getElementById(‘e-github’).value;
+document.getElementById(‘contact-linkedin-link’).href=document.getElementById(‘e-linkedin’).value;
+document.getElementById(‘footer-left’).innerText=document.getElementById(‘e-footer-l’).value;
+renderProjects(); renderSkills();
+}
+
+async function saveAndCommit() {
+const token = document.getElementById(‘gh-token’).value.trim();
+if (!token) { setStatus(‘err’,‘Please enter your GitHub PAT first.’); return; }
+applyEdits();
+const btn = document.querySelector(’.ep-save’); btn.disabled=true; setStatus(‘loading’,‘Publishing…’);
+try {
+const metaRes = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`,{headers:{Authorization:`token ${token}`,Accept:‘application/vnd.github+json’}});
+if (!metaRes.ok) throw new Error(‘Could not fetch file. Check your PAT.’);
+const meta = await metaRes.json();
+const encoded = btoa(unescape(encodeURIComponent(document.documentElement.outerHTML)));
+const commitRes = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`,{method:‘PUT’,headers:{Authorization:`token ${token}`,Accept:‘application/vnd.github+json’,‘Content-Type’:‘application/json’},body:JSON.stringify({message:‘Update portfolio content’,content:encoded,sha:meta.sha})});
+if (!commitRes.ok) { const e=await commitRes.json(); throw new Error(e.message||‘Commit failed’); }
+setStatus(‘ok’,‘✓ Published! Live in ~30 seconds.’);
+} catch(e) { setStatus(‘err’,’✗ ’+e.message); }
+finally { btn.disabled=false; }
+}
+function setStatus(type,msg) { const el=document.getElementById(‘ep-status’); el.className=’ep-status ’+type; el.innerText=msg; }
+
+window.addEventListener(‘load’, () => {
+if (new URLSearchParams(window.location.search).get(‘edit’) === ‘true’) openEditor();
+});
+</script>
+
+</body>
+</html>
