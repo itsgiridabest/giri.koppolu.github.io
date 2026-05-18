@@ -1383,8 +1383,11 @@
     "heading": "Got a project, opportunity,\nor just want to connect?",
     "bio": "I'm always open to conversations with professionals in cybersecurity, research opportunities, or just talking about cool projects. Feel free to reach out.",
     "email": "your@email.com",
+    "emailLabel": "Email me",
     "github": "https://github.com/itsgiridabest",
+    "githubLabel": "GitHub",
     "linkedin": "https://linkedin.com/in/",
+    "linkedinLabel": "LinkedIn",
     "footer": "© 2026 Giri. All rights reserved."
   }
 }
@@ -1629,9 +1632,9 @@
       setHtml("contact-heading", escapeHtml(content.contact.heading).replace(/\n/g, "<br>"));
       document.getElementById("contact-bio").textContent = content.contact.bio;
       setHtml("contact-actions", `
-        <a href="mailto:${escapeHtml(content.contact.email)}" class="btn btn-primary">Email me -></a>
-        <a href="${escapeHtml(content.contact.github)}" target="_blank" rel="noreferrer" class="btn btn-ghost">GitHub</a>
-        <a href="${escapeHtml(content.contact.linkedin)}" target="_blank" rel="noreferrer" class="btn btn-ghost">LinkedIn</a>
+        <a href="mailto:${escapeHtml(content.contact.email)}" class="btn btn-primary">${escapeHtml(content.contact.emailLabel || "Email me")} -></a>
+        <a href="${escapeHtml(content.contact.github)}" target="_blank" rel="noreferrer" class="btn btn-ghost">${escapeHtml(content.contact.githubLabel || "GitHub")}</a>
+        <a href="${escapeHtml(content.contact.linkedin)}" target="_blank" rel="noreferrer" class="btn btn-ghost">${escapeHtml(content.contact.linkedinLabel || "LinkedIn")}</a>
       `);
       document.getElementById("footer-left").textContent = content.contact.footer;
     }
@@ -1794,8 +1797,11 @@
         ${field("Contact heading", ["contact", "heading"], content.contact.heading, 2)}
         ${field("Contact bio", ["contact", "bio"], content.contact.bio, 4)}
         ${field("Email", ["contact", "email"], content.contact.email)}
+        ${field("Email button text", ["contact", "emailLabel"], content.contact.emailLabel || "Email me")}
         ${field("GitHub URL", ["contact", "github"], content.contact.github)}
+        ${field("GitHub button text", ["contact", "githubLabel"], content.contact.githubLabel || "GitHub")}
         ${field("LinkedIn URL", ["contact", "linkedin"], content.contact.linkedin)}
+        ${field("LinkedIn button text", ["contact", "linkedinLabel"], content.contact.linkedinLabel || "LinkedIn")}
         ${field("Footer", ["contact", "footer"], content.contact.footer)}
       `);
       wirePathInputs(document.getElementById("editor-basics"));
